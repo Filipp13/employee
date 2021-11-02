@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using System;
 using System.DirectoryServices.Protocols;
 using System.Net;
@@ -9,9 +10,10 @@ namespace Employee
     {
         private readonly LdapDirectoryIdentifier identifier;
         private readonly NetworkCredential credential;
-        public ADManagment()
+        public ADManagment(IOptions<ADManagmentOptions> aDManagmentOptions)
         {
-            identifier = new LdapDirectoryIdentifier("10.163.1.77", 389);
+            _ = aDManagmentOptions ?? throw new ArgumentNullException(nameof(aDManagmentOptions.Value));
+            identifier = new LdapDirectoryIdentifier(aDManagmentOptions.Value.Address, aDManagmentOptions.Value.Port);
             credential = new NetworkCredential(
                 Environment.GetEnvironmentVariable("UserADLogin"),
                 Environment.GetEnvironmentVariable("UserADPassword"));

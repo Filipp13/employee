@@ -55,9 +55,8 @@ namespace Employee
 
             services.AddPracticeManagementContext(Configuration);
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddSingleton<IADManagment, ADManagment>();
             services.AddSingleton<IRolesManagment, RolesManagment>();
-
+            services.AddADManagment(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
