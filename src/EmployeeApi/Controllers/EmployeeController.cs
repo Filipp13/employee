@@ -41,11 +41,12 @@ namespace Employee.Controllers
         }
 
         [HttpGet("user-info")]
-        public async Task<ActionResult<EmployeeDto>> GetUserInfo()
-        => await employeeRepository.EmployeeByLoginAsync(User.Identity.Name.Split('@')[0]) switch
+        public async Task<ActionResult<EmployeeDto>> GetUserInfoAsync()
+        => await employeeRepository.EmployeeByLoginAsync(User?.Identity?.Name?.Split('@')[0] 
+            ?? throw new NullReferenceException("User identity is absent claim name")) switch
         {
             EmployeeDto employee when employee is not null => Ok(employee),
-            _ => NotFound($"employee with login {User.Identity.Name.Split('@')[0]} is absent")
+            _ => NotFound($"employee with login {User?.Identity?.Name?.Split('@')[0]} is absent")
         };
 
         [HttpGet("user-info/{login}")]
@@ -57,15 +58,15 @@ namespace Employee.Controllers
         };
 
         [HttpGet("is-admin/{login}")]
-        public async Task<ActionResult<bool>> IsAdmin(string login)
+        public async Task<ActionResult<bool>> IsAdminAsync(string login)
         => await adManagment.IsAdminAsync(login);
 
         [HttpGet("is-risk-management/{login}")]
-        public async Task<ActionResult<bool>> IsRiskManagement(string login)
+        public async Task<ActionResult<bool>> IsRiskManagementAsync(string login)
         {
             if (string.IsNullOrEmpty(login))
             {
-                login = (User.Identity.Name.Split('@')[0] == null ? Environment.UserName : User.Identity.Name.Split('@')[0]);
+                login = (User?.Identity?.Name?.Split('@')[0] == null ? Environment.UserName : User.Identity.Name.Split('@')[0]);
             }
 
             return await adManagment.IsAdminAsync(login) || await adManagment.IsUsersInsideGroupAsync("CIS Trinity RM", login);
@@ -86,7 +87,7 @@ namespace Employee.Controllers
 
             foreach (var empl in employees)
             {
-                var canBeAssToRole = roleCode switch
+                var canBeAssignToRole = roleCode switch
                 {
                     var role when rolesManagment.IsADRole(role) =>
                         (await adManagment.IsUsersInsideGroupAsync("CIS Trinity PPD", empl.LastName), V),
@@ -102,8 +103,8 @@ namespace Employee.Controllers
                 var employeeForRole = new EmployeeForRole(empl);
 
                 //builder
-                employeeForRole.CanBeAssignedToRole = canBeAssToRole.Item1;
-                employeeForRole.Explanation = canBeAssToRole.Item2;
+                employeeForRole.CanBeAssignedToRole = canBeAssignToRole.Item1;
+                employeeForRole.Explanation = canBeAssignToRole.Item2;
                 retval.Add(employeeForRole);
             }
             return retval;

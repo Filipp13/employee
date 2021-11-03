@@ -68,7 +68,7 @@ namespace Employee
                         PartialResultProcessing.NoPartialResultSupport,
                         null) as SearchResponse;
 
-                    return response;
+                    return response!;
 
                 }
                 catch

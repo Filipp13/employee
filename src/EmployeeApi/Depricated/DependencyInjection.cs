@@ -22,7 +22,7 @@ namespace Employee
 
             services.Configure<ADManagmentOptions>(configuration.GetSection(ADManagmentOptions.SectionName));
 
-            return services.AddSingleton<IADManagment, ADManagment>();
+            return services.AddScoped<IADManagment, ADManagment>();
         }
     }
 }

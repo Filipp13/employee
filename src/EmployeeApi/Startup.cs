@@ -25,7 +25,7 @@ namespace Employee
 
         public IConfiguration Configuration { get; }
 
-        private IAuthenticationApi authenticationApi;
+        private IAuthenticationApi? authenticationApi;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -33,8 +33,10 @@ namespace Employee
             services.AddArmsServiceClient(
                 Configuration, 
                 new ArmsCredentials(
-                    Environment.GetEnvironmentVariable("UserArmsLogin"),
-                    Environment.GetEnvironmentVariable("UserArmsPassword"),
+                    Environment.GetEnvironmentVariable("UserArmsLogin")
+                        ?? throw new Exception("UserArmsLogin"),
+                    Environment.GetEnvironmentVariable("UserArmsPassword")
+                        ?? throw new Exception("UserArmsPassword"),
                     "atrema"));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -96,7 +98,8 @@ namespace Employee
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>();
+            authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>() 
+                ?? throw new Exception("AuthenticationApi is not resolved");
 
             app.UseSwagger();
             app.UseSwaggerUI();
@@ -121,10 +124,10 @@ namespace Employee
         }
 
         private JwtSecurityToken SignatureValidator(string token, TokenValidationParameters parameters)
-        => authenticationApi.ValidateTokenAsync(token).GetAwaiter().GetResult() switch
+        => authenticationApi!.ValidateTokenAsync(token).GetAwaiter().GetResult() switch
         {
             true => new JwtSecurityToken(token),
-            false => null
+            false => null!
         };
     }
 }

@@ -30,6 +30,6 @@ namespace Employee
         => rolesAD.Contains(role);
 
         public string SPRole(string role)
-        => rolesSP.ContainsKey(role) ? rolesSP.GetValueOrDefault(role) : string.Empty;
+        => rolesSP.ContainsKey(role) ? rolesSP.GetValueOrDefault(role) ?? string.Empty : string.Empty;
     }
 }
