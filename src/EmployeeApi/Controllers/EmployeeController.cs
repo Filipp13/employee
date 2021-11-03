@@ -1,5 +1,6 @@
 ﻿using EmployeeApi.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Employee.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
