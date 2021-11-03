@@ -1,5 +1,4 @@
 ﻿using EmployeeApi.Infra;
-using System;
 
 namespace EmployeeApi.Domain
 {
@@ -17,6 +16,6 @@ namespace EmployeeApi.Domain
             empl.Department,
             empl.AccountName,
             empl.IsActive,
-            empl.OfficeCity) : throw new ArgumentException(nameof(empl));
+            empl.OfficeCity) : default!;
     }
 }

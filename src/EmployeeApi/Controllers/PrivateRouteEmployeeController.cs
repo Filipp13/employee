@@ -1,4 +1,5 @@
 ﻿using EmployeeApi.Domain;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,16 +11,16 @@ namespace Employee.Controllers
     [Route("private/api/trinity/employee")]
     public class PrivateRouteEmployeeController : ControllerBase
     {
-        private readonly IEmployeeRepository employeeRepository;
+        private readonly IMediator mediator;
 
-        public PrivateRouteEmployeeController(IEmployeeRepository employeeRepository)
+        public PrivateRouteEmployeeController(IMediator mediator)
         {
-            this.employeeRepository = employeeRepository;
+            this.mediator = mediator;
         }
 
         [HttpGet("user-info/{login}")]
         public async Task<ActionResult<EmployeeDto>> GetUserInfoByLgin(string login)
-        => await employeeRepository.EmployeeByLoginAsync(login) switch
+        => await mediator.Send(new GetEmployeeQuery(login)) switch
         {
             EmployeeDto employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {login} is absent")

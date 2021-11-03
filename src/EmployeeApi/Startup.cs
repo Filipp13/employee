@@ -13,6 +13,8 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using MediatR;
+using System.Reflection;
 
 namespace Employee
 {
@@ -29,6 +31,12 @@ namespace Employee
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
+            services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
+
+
             services.AddAuthenticationServiceClient(Configuration);
             services.AddArmsServiceClient(
                 Configuration, 
