@@ -14,14 +14,14 @@ namespace Employee
 {
     public sealed class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICacheableMediatrQuery
     {
-        private readonly IDistributedCache _cache;
-        private readonly ILogger _logger;
-        private readonly CacheSettings _settings;
+        private readonly IDistributedCache cache;
+        private readonly ILogger logger;
+        private readonly CacheSettings settings;
         public CachingBehavior(IDistributedCache cache, ILogger<TResponse> logger, IOptions<CacheSettings> settings)
         {
-            _cache = cache;
-            _logger = logger;
-            _settings = settings.Value;
+            this.cache = cache;
+            this.logger = logger;
+            this.settings = settings.Value;
         }
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -30,22 +30,22 @@ namespace Employee
             async Task<TResponse> GetResponseAndAddToCache()
             {
                 response = await next();
-                var slidingExpiration = request.SlidingExpiration == null ? TimeSpan.FromHours(_settings.SlidingExpiration) : request.SlidingExpiration;
+                var slidingExpiration = request.SlidingExpiration == null ? TimeSpan.FromHours(settings.SlidingExpiration) : request.SlidingExpiration;
                 var options = new DistributedCacheEntryOptions { SlidingExpiration = slidingExpiration };
                 var serializedData = Encoding.Default.GetBytes(JsonSerializer.Serialize(response));
-                await _cache.SetAsync((string)request.CacheKey, serializedData, options, cancellationToken);
+                await cache.SetAsync((string)request.CacheKey, serializedData, options, cancellationToken);
                 return response;
             }
-            var cachedResponse = await _cache.GetAsync((string)request.CacheKey, cancellationToken);
+            var cachedResponse = await cache.GetAsync((string)request.CacheKey, cancellationToken);
             if (cachedResponse != null)
             {
                 response = JsonSerializer.Deserialize<TResponse>(Encoding.Default.GetString(cachedResponse));
-                _logger.LogInformation($"Fetched from Cache -> '{request.CacheKey}'.");
+                logger.LogInformation($"Fetched from Cache -> '{request.CacheKey}'.");
             }
             else
             {
                 response = await GetResponseAndAddToCache();
-                _logger.LogInformation($"Added to Cache -> '{request.CacheKey}'.");
+                logger.LogInformation($"Added to Cache -> '{request.CacheKey}'.");
             }
             return response;
         }
