@@ -15,8 +15,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using MediatR;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
-namespace Employee
+[assembly: InternalsVisibleTo("EmployeeApi.Tests")]
+namespace EmployeeApi
 {
     public class Startup
     {
@@ -42,9 +44,9 @@ namespace Employee
                 Configuration, 
                 new ArmsCredentials(
                     Environment.GetEnvironmentVariable("UserArmsLogin")
-                        ?? throw new Exception("UserArmsLogin"),
+                      /*  ?? throw new Exception("UserArmsLogin")*/,
                     Environment.GetEnvironmentVariable("UserArmsPassword")
-                        ?? throw new Exception("UserArmsPassword"),
+                        /*?? throw new Exception("UserArmsPassword")*/,
                     "atrema"));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

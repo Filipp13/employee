@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Employee.Controllers
+namespace EmployeeApi.Controllers
 {
     [AllowAnonymous]
     [ApiController]

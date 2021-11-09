@@ -1,5 +1,5 @@
 ﻿using ArmsHttpClient;
-using Employee.Controllers;
+using EmployeeApi.Controllers;
 using EmployeeApi.Domain;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Employee
+namespace EmployeeApi
 {
     internal sealed class GetEmployeesForRoleQueryHandler : IRequestHandler<GetEmployeesForRoleQuery, IEnumerable<EmployeeForRole>>
     {
@@ -40,7 +40,7 @@ namespace Employee
 
             var employees = await employeeRepository.SearchEmployeeByDisplayName(request.Search);
 
-            List<EmployeeForRole> retval = new List<EmployeeForRole>();
+            List<EmployeeForRole> retval = new();
 
             foreach (var empl in employees)
             {

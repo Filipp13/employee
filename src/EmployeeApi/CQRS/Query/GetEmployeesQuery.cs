@@ -3,7 +3,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace Employee
+namespace EmployeeApi
 {
     public sealed class GetEmployeesQuery : IRequest<IEnumerable<EmployeeDto>>, ICacheableMediatrQuery
     {

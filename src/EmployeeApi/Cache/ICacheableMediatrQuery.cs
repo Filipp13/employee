@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Employee
+namespace EmployeeApi
 {
     public interface ICacheableMediatrQuery
     {

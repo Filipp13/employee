@@ -7,21 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Employee.Controllers
+namespace EmployeeApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly ILogger<EmployeeController> logger;
         private readonly IMediator mediator;
 
         public EmployeeController(
-            ILogger<EmployeeController> logger,
             IMediator mediator)
         {
-            this.logger = logger;
             this.mediator = mediator;
         }
 

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Employee
+namespace EmployeeApi
 {
     internal sealed class IsAdminQueryHandler : IRequestHandler<IsAdminQuery, bool>
     {

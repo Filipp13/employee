@@ -1,7 +1,7 @@
 ﻿using EmployeeApi.Domain;
 using System.Text.Json.Serialization;
 
-namespace Employee.Controllers
+namespace EmployeeApi.Controllers
 {
     public sealed class EmployeeForRole
     {

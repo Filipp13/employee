@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Employee
+namespace EmployeeApi
 {
     public static class DependencyInjection
     {

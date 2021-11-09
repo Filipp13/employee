@@ -1,4 +1,4 @@
-﻿namespace Employee
+﻿namespace EmployeeApi
 {
     public sealed class CacheSettings
     {

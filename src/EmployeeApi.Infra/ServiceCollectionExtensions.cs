@@ -13,7 +13,8 @@ namespace EmployeeApi.Infra
         => services
             .AddDbContext<PracticeManagementContext>(options =>
                 {
-                    options.UseSqlServer(configuration.GetConnectionString("PracticeManagement"),
+                    options.UseSqlServer(configuration.GetConnectionString("PracticeManagement")
+                        ?? throw new ArgumentNullException("ConnectionString PracticeManagement is absent"),
                     sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);

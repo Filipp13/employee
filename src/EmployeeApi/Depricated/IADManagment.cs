@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Employee
+namespace EmployeeApi
 {
     public interface IADManagment
     {

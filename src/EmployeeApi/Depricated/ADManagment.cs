@@ -4,7 +4,7 @@ using System.DirectoryServices.Protocols;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Employee
+namespace EmployeeApi
 {
     public sealed class ADManagment : IADManagment
     {
@@ -12,7 +12,8 @@ namespace Employee
         private readonly NetworkCredential credential;
         public ADManagment(IOptions<ADManagmentOptions> aDManagmentOptions)
         {
-            _ = aDManagmentOptions ?? throw new ArgumentNullException(nameof(aDManagmentOptions.Value));
+            _ = aDManagmentOptions
+                ?? throw new ArgumentNullException(nameof(aDManagmentOptions.Value));
             identifier = new LdapDirectoryIdentifier(aDManagmentOptions.Value.Address, aDManagmentOptions.Value.Port);
             credential = new NetworkCredential(
                 Environment.GetEnvironmentVariable("UserADLogin"),

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System;
 
-namespace Employee
+namespace EmployeeApi
 {
     public sealed class IsRiskManagementQuery : IRequest<bool>, ICacheableMediatrQuery
     {
