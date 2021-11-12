@@ -13,8 +13,16 @@ namespace EmployeeApi.Infra
         => services
             .AddDbContext<PracticeManagementContext>(options =>
                 {
-                    options.UseSqlServer(configuration.GetConnectionString("PracticeManagement")
-                        ?? throw new ArgumentNullException("ConnectionString PracticeManagement is absent"),
+                    var connectionString = configuration.GetConnectionString("PracticeManagement")
+                         ?? throw new ArgumentNullException("ConnectionString PracticeManagement is absent");
+
+                    var userDb = Environment.GetEnvironmentVariable("UserDB") 
+                        ?? throw new ArgumentNullException("Environment variable UserDB is absent");
+
+                    var userDbPassword = Environment.GetEnvironmentVariable("UserDBPassword") 
+                        ?? throw new ArgumentNullException("Environment variable UserDBPassword is absent");
+
+                    options.UseSqlServer($"{connectionString};User Id={userDb};Password={userDbPassword}",
                     sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
