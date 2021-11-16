@@ -33,7 +33,7 @@ namespace EmployeeApi.Tests
         [Fact]
         public async Task EmployeeByLoginAsyncShouldEqualSource1()
         {
-            var employee = await employeeRepository.SearchEmployeeByDisplayName("DisplayName");
+            var employee = await employeeRepository.SearchEmployeeByDisplayNameAsync("DisplayName");
 
             Assert.True(employee.Count == 8);
         }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ADManager;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,16 +7,16 @@ namespace EmployeeApi
 {
     internal sealed class IsRiskManagementQueryHandler : IRequestHandler<IsRiskManagementQuery, bool>
     {
-        private readonly IADManagment adManagment;
+        private readonly IADManager aDManager;
 
-        public IsRiskManagementQueryHandler(IADManagment adManagment)
+        public IsRiskManagementQueryHandler(IADManager aDManager)
         {
-            this.adManagment = adManagment;
+            this.aDManager = aDManager;
         }
 
         public async Task<bool> Handle(IsRiskManagementQuery request, CancellationToken cancellationToken)
-        => await adManagment.IsAdminAsync(request.Login) || 
-            await adManagment.IsUsersInsideGroupAsync("CIS Trinity RM", request.Login);
+        => await aDManager.IsUsersInsideGroupAsync("CIS Trinity Admins", request.Login) || 
+            await aDManager.IsUsersInsideGroupAsync("CIS Trinity RM", request.Login);
 
     }
 }

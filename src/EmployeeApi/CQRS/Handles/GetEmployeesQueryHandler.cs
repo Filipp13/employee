@@ -16,7 +16,7 @@ namespace EmployeeApi
         }
 
         public async Task<IEnumerable<EmployeeDto>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
-        => await employeeRepository.SearchEmployeeByDisplayName(request.Search);
+        => await employeeRepository.SearchEmployeeByDisplayNameAsync(request.Search);
      
     }
 }

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApi.Infra", "Employ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationHttpClient", "AuthenticationHttpClient\AuthenticationHttpClient.csproj", "{6E832312-3F4C-428F-8F3A-3FE45166F653}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeApi.Tests", "EmployeeApi.Tests\EmployeeApi.Tests.csproj", "{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApi.Tests", "EmployeeApi.Tests\EmployeeApi.Tests.csproj", "{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
