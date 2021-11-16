@@ -16,14 +16,11 @@ namespace EmployeeApi.Infra
         }
 
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<VPersonDepAndBu> VPersonDepAndBus { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            /*if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=RUMOS0929.ATREMA.DELOITTE.COM;Database=PracticeManagementQA;MultipleActiveResultSets=true;Integrated Security=SSPI;");
-            }*/
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -91,6 +88,23 @@ namespace EmployeeApi.Infra
                     .WithMany(p => p.InverseManager)
                     .HasForeignKey(d => d.ManagerId)
                     .HasConstraintName("FK__Employee__Manage__3A4CA8FD");
+            });
+
+            modelBuilder.Entity<VPersonDepAndBu>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vPersonDepAndBU");
+
+                entity.Property(e => e.Ad).HasMaxLength(100);
+
+                entity.Property(e => e.Department)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.NameFirstRu).HasMaxLength(100);
+
+                entity.Property(e => e.NameLastRu).HasMaxLength(100);
             });
 
             OnModelCreatingPartial(modelBuilder);

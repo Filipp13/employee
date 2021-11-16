@@ -1,4 +1,5 @@
-﻿using ArmsHttpClient;
+﻿using ADManager;
+using ArmsHttpClient;
 using EmployeeApi.Controllers;
 using EmployeeApi.Domain;
 using MediatR;
@@ -16,20 +17,20 @@ namespace EmployeeApi
 
         private readonly IArmsApi armsApi;
         private readonly IEmployeeRepository employeeRepository;
-        private readonly IADManagment adManagment;
+        private readonly IADManager aDManager;
         private readonly IRolesManagment rolesManagment;
         private readonly string armsList;
 
         public GetEmployeesForRoleQueryHandler(
             IEmployeeRepository employeeRepository,
             IArmsApi armsApi,
-            IADManagment adManagment,
+            IADManager aDManager,
             IRolesManagment rolesManagment,
             IConfiguration configuration)
         {
             this.employeeRepository = employeeRepository;
             this.armsApi = armsApi;
-            this.adManagment = adManagment;
+            this.aDManager = aDManager;
             this.rolesManagment = rolesManagment;
             armsList = configuration.GetValue<string>("ARMSActiveListGUID");
         }
@@ -38,7 +39,7 @@ namespace EmployeeApi
         {
             string listName = request.ArmsListId == armsList ? "Records%20Archive" : "Records";
 
-            var employees = await employeeRepository.SearchEmployeeByDisplayName(request.Search);
+            var employees = await employeeRepository.SearchEmployeeByDisplayNameAsync(request.Search);
 
             List<EmployeeForRole> retval = new();
 
@@ -47,7 +48,7 @@ namespace EmployeeApi
                 var canBeAssignToRole = request.RoleCode switch
                 {
                     var role when rolesManagment.IsADRole(role) =>
-                        (await adManagment.IsUsersInsideGroupAsync("CIS Trinity PPD", empl.LastName), V),
+                        (await aDManager.IsUsersInsideGroupAsync("CIS Trinity PPD", empl.LastName), V),
 
                     var role when rolesManagment.IsSPRole(role) &&
                         (empl.Id == await EmployeeFromSP(request.Armsid, listName, "EP") ||

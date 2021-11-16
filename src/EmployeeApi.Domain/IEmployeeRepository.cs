@@ -7,6 +7,10 @@ namespace EmployeeApi.Domain
     {
         Task<EmployeeDto> EmployeeByLoginAsync(string login);
 
-        Task<List<EmployeeDto>> SearchEmployeeByDisplayName(string search);
+        Task<List<EmployeeDto>> SearchEmployeeByDisplayNameAsync(string search);
+
+        Task<int> UpdateEmployeesAsync(IEnumerable<EmployeeUpdateDto> employees);
+
+        Task<Dictionary<string, EmployeeSAPDto>> GetEmployeeSAPDtoAsync();
     }
 }

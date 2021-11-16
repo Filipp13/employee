@@ -16,6 +16,8 @@ using System.IdentityModel.Tokens.Jwt;
 using MediatR;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using ADManager;
+using System.DirectoryServices.Protocols;
 
 [assembly: InternalsVisibleTo("EmployeeApi.Tests")]
 namespace EmployeeApi
@@ -38,6 +40,8 @@ namespace EmployeeApi
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
             services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
 
+            services.AddTransient(typeof(Entity<EmployeeAD, SearchResultEntry>), typeof(EmployeeMapper));
+            services.AddTransient(typeof(IADManagmentEntity<,>), typeof(ADManagment<,>));
 
             services.AddAuthenticationServiceClient(Configuration);
             services.AddArmsServiceClient(

@@ -25,5 +25,9 @@ namespace EmployeeApi.Controllers
             EmployeeDto employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {login} is absent")
         };
+
+        [HttpGet("actualizeemployees")]
+        public async Task<ActionResult<int>> ActualizeEmployees()
+        => Ok(await mediator.Send(new ImportEmployeeCommand()));
     }
 }

@@ -4,7 +4,6 @@ namespace EmployeeApi.Domain
 {
     public static class Mapper
     {
-
         public static EmployeeDto Map(this Employee empl)
         => empl is not null ? new EmployeeDto(
             empl.EmployeeId,
@@ -17,5 +16,31 @@ namespace EmployeeApi.Domain
             empl.AccountName,
             empl.IsActive,
             empl.OfficeCity) : default!;
+
+        public static Employee Map(this EmployeeUpdateDto empl)
+        => empl is not null ? new Employee
+        {
+            ObjectSid = empl.ObjectSid,
+            LastName = empl.LastName,
+            FirstName = empl.FirstName,
+            DisplayName = empl.DisplayName,
+            Email = empl.Email,
+            Title = empl.Title,
+            AccountName = empl.AccountName,
+            OfficeCity = empl.OfficeCity,
+            Grade = empl.Grade,
+            IsActive = empl.IsActive,
+            Department = empl.Department,
+            NameFirstLocal = empl.NameFirstLocal,
+            DisplayNameLocal = empl.DisplayNameLocal,
+            NameLastLocal = empl.NameLastLocal
+        } : default!;
+
+        public static EmployeeSAPDto Map(this VPersonDepAndBu p)
+        => new EmployeeSAPDto(
+            p.Department,
+            p.Ad,
+            p.NameFirstRu,
+            p.NameLastRu);
     }
 }

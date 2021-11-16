@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ADManager;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,15 +7,15 @@ namespace EmployeeApi
 {
     internal sealed class IsAdminQueryHandler : IRequestHandler<IsAdminQuery, bool>
     {
-        private readonly IADManagment adManagment;
+        private readonly IADManager aDManager;
 
-        public IsAdminQueryHandler(IADManagment adManagment)
+        public IsAdminQueryHandler(IADManager aDManager)
         {
-            this.adManagment = adManagment;
+            this.aDManager = aDManager;
         }
 
         public async Task<bool> Handle(IsAdminQuery request, CancellationToken cancellationToken)
-        => await adManagment.IsAdminAsync(request.Login);
+        => await aDManager.IsUsersInsideGroupAsync("CIS Trinity Admins", request.Login);
 
 
     }
