@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<databaseChangeLog
+   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro 
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">  
+	<changeSet id="2021-11-19-initial" author="fantipov">
+		<createTable tableName="Employee">
+			<column name="EmployeeID" type="int" autoIncrement="true">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="ManagerID" type="int">
+				<constraints nullable="true" foreignKeyName="FK__Employee__Manager" references="Employee(EmployeeID)"/>
+			</column>
+			<column name="objectSID" type="blob(100)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="Email" type="nvarchar(50)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="DisplayName" type="nvarchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="LastName" type="nvarchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="FirstName" type="nvarchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="Grade" type="nvarchar(10)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="IsActive" type="bit">
+				<constraints nullable="false"/>
+			</column>
+			<column name="Title" type="nvarchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="AccountName" type="nvarchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="Department" type="nvarchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="NameFirstLocal" type="nvarchar(100)">
+				<constraints nullable="true"/>
+			</column>
+			<column name="NameLastLocal" type="nvarchar(155)">
+				<constraints nullable="true"/>
+			</column>
+			<column name="DisplayNameLocal" type="nvarchar(255)">
+				<constraints nullable="true"/>
+			</column>
+			<column name="OfficeCity" type="nvarchar(100)">
+				<constraints nullable="true"/>
+			</column>
+		</createTable>
+	</changeSet>
+</databaseChangeLog> 
