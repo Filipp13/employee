@@ -48,9 +48,9 @@ namespace EmployeeApi
                 Configuration, 
                 new ArmsCredentials(
                     Environment.GetEnvironmentVariable("UserArmsLogin")
-                      /*  ?? throw new Exception("UserArmsLogin")*/,
+                        ?? throw new Exception("UserArmsLogin"),
                     Environment.GetEnvironmentVariable("UserArmsPassword")
-                        /*?? throw new Exception("UserArmsPassword")*/,
+                        ?? throw new Exception("UserArmsPassword"),
                     "atrema"));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
