@@ -9,7 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="ADManager" Version="1.0.0-build.1" />
-		<PackageReference Include="ArmsHttpClient" Version="1.0.2-build3" />
+		<PackageReference Include="ArmsHttpClient" Version="1.0.2" />
 		<PackageReference Include="AuthenticationHttpClient" Version="1.0.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApi.Domain", "Emplo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApi.Infra", "EmployeeApi.Infra\EmployeeApi.Infra.csproj", "{2DB5B44B-659C-4F37-B70D-1FB176B20A78}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationHttpClient", "AuthenticationHttpClient\AuthenticationHttpClient.csproj", "{6E832312-3F4C-428F-8F3A-3FE45166F653}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApi.Tests", "EmployeeApi.Tests\EmployeeApi.Tests.csproj", "{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{2DB5B44B-659C-4F37-B70D-1FB176B20A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DB5B44B-659C-4F37-B70D-1FB176B20A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DB5B44B-659C-4F37-B70D-1FB176B20A78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E832312-3F4C-428F-8F3A-3FE45166F653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E832312-3F4C-428F-8F3A-3FE45166F653}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E832312-3F4C-428F-8F3A-3FE45166F653}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E832312-3F4C-428F-8F3A-3FE45166F653}.Release|Any CPU.Build.0 = Release|Any CPU
 		{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
