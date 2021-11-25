@@ -25,8 +25,9 @@ FROM build AS publish
 RUN dotnet publish "EmployeeApi/EmployeeApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
+
+ENV ASPNETCORE_URLS=http://+:80
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "EmployeeApi.dll"]
-
 EXPOSE 80
