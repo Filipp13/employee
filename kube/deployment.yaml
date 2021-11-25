@@ -9,6 +9,8 @@ spec:
     metadata: {labels: {pod: _PROJECT_NAME_}}
     spec:
       restartPolicy: Always
+      volumes:
+      - {name: _PROJECT_NAME_-map-vol, configMap: {name: _PROJECT_NAME_-cm}}
       securityContext:
         runAsNonRoot: true
         runAsUser: 56243
@@ -20,6 +22,8 @@ spec:
         image: _IMAGE_NAME_
         imagePullPolicy: IfNotPresent
         ports: [{containerPort: 80, name: tcp80}]
+        volumeMounts:
+        - {name: _PROJECT_NAME_-map-vol, subPath: appsettings.json, mountPath: /app/appsettings.json}
         envFrom:
         - secretRef: {name: _PROJECT_NAME_-sec}
         - configMapRef: {name: _PROJECT_NAME_-map}
