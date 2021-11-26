@@ -11,6 +11,7 @@ spec:
       restartPolicy: Always
       volumes:
       - {name: _PROJECT_NAME_-map-vol, configMap: {name: _PROJECT_NAME_-cm}}
+      - {name: _PROJECT_NAME_-tmp, emptyDir: {}}
       securityContext:
         runAsNonRoot: true
         runAsUser: 56243
@@ -24,6 +25,7 @@ spec:
         ports: [{containerPort: 80, name: tcp80}]
         volumeMounts:
         - {name: _PROJECT_NAME_-map-vol, subPath: appsettings.json, mountPath: /app/appsettings.json}
+        - {name: _PROJECT_NAME_-tmp, mountPath: /tmp}
         envFrom:
         - secretRef: {name: _PROJECT_NAME_-sec}
         - configMapRef: {name: _PROJECT_NAME_-map}
