@@ -2,8 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>8b9c5007-294b-4e92-a32c-3cc36e6413a8</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<Nullable>enable</Nullable>
-		<GenerateProgramFile>false</GenerateProgramFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,7 +13,12 @@
 		<PackageReference Include="AuthenticationHttpClient" Version="1.0.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
+		<PackageReference Include="System.DirectoryServices.Protocols" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -22,7 +22,7 @@ spec:
       - name: _PROJECT_NAME_
         image: _IMAGE_NAME_
         imagePullPolicy: IfNotPresent
-        ports: [{containerPort: 5000, name: tcp5000}]
+        ports: [{containerPort: 80, name: tcp80}]
         volumeMounts:
         - {name: _PROJECT_NAME_-map-vol, subPath: appsettings.json, mountPath: /app/appsettings.json}
         - {name: _PROJECT_NAME_-tmp, mountPath: /tmp}
