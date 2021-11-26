@@ -4,8 +4,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS base
 
 WORKDIR /app
 
-RUN apt update -y \
-    && apt install ca-certificates gss-ntlmssp libldap-2.4-2 net-tools -y \
+RUN apt-get update -y \
+    && apt-get install ca-certificates gss-ntlmssp libldap-2.4-2 net-tools -y \
     && update-ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
