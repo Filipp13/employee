@@ -35,10 +35,10 @@ namespace EmployeeApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDistributedMemoryCache();
+            //services.AddDistributedMemoryCache();
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
-            services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
+            //services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
 
             services.AddTransient(typeof(Entity<EmployeeAD, SearchResultEntry>), typeof(EmployeeMapper));
             services.AddTransient(typeof(IADManagmentEntity<,>), typeof(ADManagment<,>));
