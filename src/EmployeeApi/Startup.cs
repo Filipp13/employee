@@ -115,8 +115,16 @@ namespace EmployeeApi
             authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>() 
                 ?? throw new Exception("AuthenticationApi is not resolved");
 
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "api/employee/swagger/{documentname}/swagger.json";
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/api/employee/swagger/v1/swagger.json", "Employee API");
+                c.RoutePrefix = "api/employee/swagger";
+            });
 
             if (env.IsDevelopment())
             {
