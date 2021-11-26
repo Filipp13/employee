@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using ADManager;
 using System.DirectoryServices.Protocols;
+using Microsoft.AspNetCore.Http;
 
 [assembly: InternalsVisibleTo("EmployeeApi.Tests")]
 namespace EmployeeApi
@@ -34,43 +35,43 @@ namespace EmployeeApi
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDistributedMemoryCache();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            //services.AddMediatR(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
             //services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
 
-            services.AddTransient(typeof(Entity<EmployeeAD, SearchResultEntry>), typeof(EmployeeMapper));
-            services.AddTransient(typeof(IADManagmentEntity<,>), typeof(ADManagment<,>));
+            //services.AddTransient(typeof(Entity<EmployeeAD, SearchResultEntry>), typeof(EmployeeMapper));
+            //services.AddTransient(typeof(IADManagmentEntity<,>), typeof(ADManagment<,>));
 
-            services.AddAuthenticationServiceClient(Configuration);
-            services.AddArmsServiceClient(
-                Configuration, 
-                new ArmsCredentials(
-                    Environment.GetEnvironmentVariable("UserArmsLogin")
-                        ?? throw new Exception("UserArmsLogin"),
-                    Environment.GetEnvironmentVariable("UserArmsPassword")
-                        ?? throw new Exception("UserArmsPassword"),
-                    "atrema"));
-            services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = "Auth Service",
-                    NameClaimType = "Login",
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = false,
-                    ValidateLifetime = false,
-                    SignatureValidator = SignatureValidator
-                };
-            });
+            //services.AddAuthenticationServiceClient(Configuration);
+            //services.AddArmsServiceClient(
+            //    Configuration, 
+            //    new ArmsCredentials(
+            //        Environment.GetEnvironmentVariable("UserArmsLogin")
+            //            ?? throw new Exception("UserArmsLogin"),
+            //        Environment.GetEnvironmentVariable("UserArmsPassword")
+            //            ?? throw new Exception("UserArmsPassword"),
+            //        "atrema"));
+            //services
+            //    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //{
+            //    options.SaveToken = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidIssuer = "Auth Service",
+            //        NameClaimType = "Login",
+            //        ValidateAudience = false,
+            //        ValidateIssuerSigningKey = false,
+            //        ValidateLifetime = false,
+            //        SignatureValidator = SignatureValidator
+            //    };
+            //});
 
-            services.AddPracticeManagementContext(Configuration);
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddSingleton<IRolesManagment, RolesManagment>();
-            services.AddADManagment(Configuration);
+            //services.AddPracticeManagementContext(Configuration);
+            //services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            //services.AddSingleton<IRolesManagment, RolesManagment>();
+            //services.AddADManagment(Configuration);
             services.AddControllers();
             //services.AddSwaggerGen(c =>
             //{
@@ -110,8 +111,8 @@ namespace EmployeeApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>() 
-                ?? throw new Exception("AuthenticationApi is not resolved");
+            //authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>() 
+            //    ?? throw new Exception("AuthenticationApi is not resolved");
 
             //app.UseSwagger(c =>
             //{
@@ -123,6 +124,13 @@ namespace EmployeeApi
             //    c.SwaggerEndpoint("/api/employee/swagger/v1/swagger.json", "Employee API");
             //    c.RoutePrefix = "api/employee/swagger";
             //});
+
+            app.Map("/map", HandleMapTest1);
+
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Test run");
+            });
 
             if (env.IsDevelopment())
             {
@@ -142,7 +150,13 @@ namespace EmployeeApi
                 endpoints.MapControllers();
             });
         }
-
+        static void HandleMapTest1(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Map Test");
+            });
+        }
         private JwtSecurityToken SignatureValidator(string token, TokenValidationParameters parameters)
         => authenticationApi!.ValidateTokenAsync(token).GetAwaiter().GetResult() switch
         {
