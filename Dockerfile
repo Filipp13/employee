@@ -4,9 +4,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS base
 
 WORKDIR /app
 
-#FIX for W2012 server
-COPY openssl.cnf /etc/ssl/openssl.cnf
-
 RUN apt update -y \
     && apt install ca-certificates gss-ntlmssp libldap-2.4-2 net-tools -y \
     && update-ca-certificates \
