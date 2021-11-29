@@ -10,7 +10,7 @@ namespace EmployeeApi.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/employee")]
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator mediator;
