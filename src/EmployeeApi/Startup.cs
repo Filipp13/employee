@@ -45,12 +45,12 @@ namespace EmployeeApi
 
             services.AddAuthenticationServiceClient(Configuration);
             services.AddArmsServiceClient(
-                Configuration, 
+                Configuration,
                 new ArmsCredentials(
                     Environment.GetEnvironmentVariable("UserArmsLogin")
-                        ?? throw new Exception("UserArmsLogin"),
+                        /*?? throw new Exception("UserArmsLogin")*/,
                     Environment.GetEnvironmentVariable("UserArmsPassword")
-                        ?? throw new Exception("UserArmsPassword"),
+                        /*?? throw new Exception("UserArmsPassword")*/,
                     "atrema"));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -72,7 +72,11 @@ namespace EmployeeApi
             services.AddPracticeManagementContext(Configuration);
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddSingleton<IRolesManagment, RolesManagment>();
-            services.AddADManagment(Configuration);
+            services.AddADManagment(Configuration, new ADManagerSecurityOptions(
+                Environment.GetEnvironmentVariable("UserADLogin")
+                        ?? throw new Exception("UserADLogin"),
+                Environment.GetEnvironmentVariable("UserADPassword")
+                        ?? throw new Exception("UserADPassword")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -112,7 +116,7 @@ namespace EmployeeApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>() 
+            authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>()
                 ?? throw new Exception("AuthenticationApi is not resolved");
 
             app.UseSwagger(c =>

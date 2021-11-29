@@ -18,7 +18,8 @@ namespace EmployeeApi
         private readonly Entity<Entity, SearchResultEntry> entity;
         public ADManagment(
             IOptions<ADManagerOptions> aDManagmentOptions,
-            Entity<Entity, SearchResultEntry> entity) : base(aDManagmentOptions) =>
+            IOptions<ADManagerSecurityOptions> aDManagerSecurityOptions,
+            Entity<Entity, SearchResultEntry> entity) : base(aDManagmentOptions, aDManagerSecurityOptions) =>
                 this.entity = entity;
 
         public async Task<List<Entity>> GetEntityOfT()
