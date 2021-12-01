@@ -1,6 +1,7 @@
 ﻿using DeepEqual.Syntax;
 using EmployeeApi.Domain;
 using EmployeeApi.Infra;
+using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,9 @@ namespace EmployeeApi.Tests
         static EmployeeRepositoryTests()
         {
             employes = EmployeesGenerator.GenerateEmployees(8);
-            employeeRepository = new EmployeeRepository(new PracticeManagementContextInMemory().GetPracticeManagementContextInMemory(employes));
+            employeeRepository = new EmployeeRepository(
+                new PracticeManagementContextInMemory().GetPracticeManagementContextInMemory(employes),
+                Mock.Of<PeopleContext>());
         }
 
         [Fact]

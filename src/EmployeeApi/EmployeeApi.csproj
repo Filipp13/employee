@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ADManager" Version="1.0.32" />
+		<PackageReference Include="ADManager" Version="1.0.33-build.1" />
 		<PackageReference Include="ArmsHttpClient" Version="1.0.3" />
 		<PackageReference Include="AuthenticationHttpClient" Version="1.0.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />

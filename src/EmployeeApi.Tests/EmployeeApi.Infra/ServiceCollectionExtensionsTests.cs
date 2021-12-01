@@ -15,7 +15,7 @@ namespace EmployeeApi.Tests
             Mock<IConfiguration> configurationSectionStub = new Mock<IConfiguration>();
             IServiceCollection services = new ServiceCollection();
             Assert.Throws<ArgumentNullException>(() => { 
-                services.AddPracticeManagementContext(configurationSectionStub.Object);
+                services.AddDatabaseContext(configurationSectionStub.Object);
                 var context = services.BuildServiceProvider().GetService<PracticeManagementContext>();
             });
         }

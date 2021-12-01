@@ -9,10 +9,14 @@ namespace EmployeeApi.Domain
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly PracticeManagementContext practiceManagementContext;
+        private readonly PeopleContext peopleContext;
 
-        public EmployeeRepository(PracticeManagementContext practiceManagementContext)
+        public EmployeeRepository(
+            PracticeManagementContext practiceManagementContext,
+            PeopleContext peopleContext)
         {
             this.practiceManagementContext = practiceManagementContext;
+            this.peopleContext = peopleContext;
         }
 
         public async Task<EmployeeDto> EmployeeByLoginAsync(string login)
@@ -20,7 +24,7 @@ namespace EmployeeApi.Domain
             .FirstOrDefaultAsync(e => e.AccountName.Equals(login))).Map();
 
         public async Task<Dictionary<string, EmployeeSAPDto>> GetEmployeeSAPDtoAsync()
-        => await practiceManagementContext.VPersonDepAndBus
+        => await peopleContext.VPersonDepAndBus
             .Select(p => p.Map())
             .ToDictionaryAsync(p => p.AccountName);
 

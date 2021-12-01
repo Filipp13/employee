@@ -22,7 +22,15 @@
       "launchBrowser": true,
       "launchUrl": "api/employee/swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "UserArmsLogin": "UserArmsLogin",
+        "UserArmsPassword": "UserArmsPassword",
+        "UserADLogin": "UserADLogin",
+        "UserADPassword": "UserADPassword",
+        "UserDBPeople": "trinity_user",
+        "UserDBPeoplePassword": "VVgQYQ3FJqs7Bqx31",
+        "UserDB": "trinity_dev",
+        "UserDBPassword": "ikpy*01?zRN[I3Fxl)"
       },
       "dotnetRunMessages": "true",
       "applicationUrl": "https://localhost:5001;http://localhost:5000"

@@ -48,9 +48,9 @@ namespace EmployeeApi
                 Configuration,
                 new ArmsCredentials(
                     Environment.GetEnvironmentVariable("UserArmsLogin")
-                        /*?? throw new Exception("UserArmsLogin")*/,
+                        ?? throw new ArgumentNullException("UserArmsLogin"),
                     Environment.GetEnvironmentVariable("UserArmsPassword")
-                        /*?? throw new Exception("UserArmsPassword")*/,
+                        ?? throw new ArgumentNullException("UserArmsPassword"),
                     "atrema"));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -69,14 +69,16 @@ namespace EmployeeApi
                 };
             });
 
-            services.AddPracticeManagementContext(Configuration);
+            services.AddDatabaseContext(Configuration);
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddSingleton<IRolesManagment, RolesManagment>();
-            services.AddADManagment(Configuration, new ADManagerSecurityOptions(
-                Environment.GetEnvironmentVariable("UserADLogin")
-                        ?? throw new Exception("UserADLogin"),
-                Environment.GetEnvironmentVariable("UserADPassword")
-                        ?? throw new Exception("UserADPassword")));
+            services.AddADManagment(Configuration, new ADManagerSecurityOptions
+            {
+                Login = Environment.GetEnvironmentVariable("UserADLogin")
+                        ?? throw new ArgumentNullException("UserADLogin"),
+                Password = Environment.GetEnvironmentVariable("UserADPassword")
+                        ?? throw new ArgumentNullException("UserADPassword")
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
