@@ -18,7 +18,7 @@ namespace EmployeeApi
         private readonly Entity<Entity, SearchResultEntry> entity;
         public ADManagment(
             IOptions<ADManagerOptions> aDManagmentOptions,
-            IOptions<ADManagerSecurityOptions> aDManagerSecurityOptions,
+            ADManagerSecurityOptions aDManagerSecurityOptions,
             Entity<Entity, SearchResultEntry> entity) : base(aDManagmentOptions, aDManagerSecurityOptions) =>
                 this.entity = entity;
 
