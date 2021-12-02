@@ -8,7 +8,7 @@ namespace EmployeeApi.Controllers
 {
     [AllowAnonymous]
     [ApiController]
-    [Route("private/api/trinity/employee")]
+    [Route("private/api/employee")]
     public class PrivateRouteEmployeeController : ControllerBase
     {
         private readonly IMediator mediator;
