@@ -1,23 +1,17 @@
-using ArmsHttpClient;
 using AuthenticationHttpClient;
-using EmployeeApi.Domain;
-using EmployeeApi.Infra;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using MediatR;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using ADManager;
-using System.DirectoryServices.Protocols;
 
 [assembly: InternalsVisibleTo("EmployeeApi.Tests")]
 namespace EmployeeApi
@@ -40,80 +34,32 @@ namespace EmployeeApi
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
             services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
 
-            services.AddTransient(typeof(Entity<EmployeeAD, SearchResultEntry>), typeof(EmployeeMapper));
-            services.AddTransient(typeof(IADManagmentEntity<,>), typeof(ADManagment<,>));
-
-            services.AddAuthenticationServiceClient(Configuration);
-            services.AddArmsServiceClient(
-                Configuration,
-                new ArmsCredentials(
-                    Environment.GetEnvironmentVariable("UserArmsLogin")
-                        ?? throw new ArgumentNullException("UserArmsLogin"),
-                    Environment.GetEnvironmentVariable("UserArmsPassword")
-                        ?? throw new ArgumentNullException("UserArmsPassword"),
-                    "atrema"));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = "Auth Service",
-                    NameClaimType = "Login",
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = false,
-                    ValidateLifetime = false,
-                    SignatureValidator = SignatureValidator
-                };
-            });
-
-            services.AddDatabaseContext(Configuration);
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddSingleton<IRolesManagment, RolesManagment>();
-            services.AddADManagment(Configuration, new ADManagerSecurityOptions
-            {
-                Login = Environment.GetEnvironmentVariable("UserADLogin")
-                        ?? throw new ArgumentNullException("UserADLogin"),
-                Password = Environment.GetEnvironmentVariable("UserADPassword")
-                        ?? throw new ArgumentNullException("UserADPassword")
-            });
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                //c.SwaggerDoc("v1", new Info { Title = "You api title", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      \r\n\r\nExample: 'Bearer 12345abcdef'",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                {
-                    new OpenApiSecurityScheme
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                    Reference = new OpenApiReference
-                        {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                        },
-                        Scheme = "oauth2",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header,
-
-                    },
-                    new List<string>()
-                    }
+                        ValidateIssuer = true,
+                        ValidIssuer = "Auth Service",
+                        NameClaimType = "Login",
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = false,
+                        ValidateLifetime = false,
+                        SignatureValidator = SignatureValidator
+                    };
                 });
 
-            });
+
+            services.AddInternalServices(Configuration);
+
+            services.AddControllers();
+
+            services.AddSwagger();
+
+            services.AddHealthCheck();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -121,19 +67,19 @@ namespace EmployeeApi
             authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>()
                 ?? throw new Exception("AuthenticationApi is not resolved");
 
-            app.UseSwagger(c =>
-            {
-                c.RouteTemplate = "api/employee/swagger/{documentname}/swagger.json";
-            });
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/api/employee/swagger/v1/swagger.json", "Employee API");
-                c.RoutePrefix = "api/employee/swagger";
-            });
-
             if (env.IsDevelopment())
             {
+                app.UseSwagger(c =>
+                {
+                    c.RouteTemplate = "api/employee/swagger/{documentname}/swagger.json";
+                });
+
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/api/employee/swagger/v1/swagger.json", "Employee API");
+                    c.RoutePrefix = "api/employee/swagger";
+                });
+
                 app.UseDeveloperExceptionPage();
             }
 
@@ -148,6 +94,7 @@ namespace EmployeeApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.UseHealthCheck();
             });
         }
 
