@@ -59,7 +59,7 @@ namespace EmployeeApi
         => services
             .AddHealthChecks()
             .AddDbContextCheck<PracticeManagementContext>("PracticeManagementDatabase", HealthStatus.Unhealthy, tags: new[] { databaseTag })
-            .AddDbContextCheck<PeopleContext>("PeopleContextDatabase", HealthStatus.Unhealthy, tags: new[] { databaseTag })
+            //.AddDbContextCheck<PeopleContext>("PeopleContextDatabase", HealthStatus.Unhealthy, tags: new[] { databaseTag })
             .Services;
 
 
