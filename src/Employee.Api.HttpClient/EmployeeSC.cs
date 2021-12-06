@@ -1,6 +1,6 @@
 ﻿namespace Employee.Api.ServiceClient
 {
-    public class Employee
+    public class EmployeeSC
     {
         public int Id { get; set; }
 

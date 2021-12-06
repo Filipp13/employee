@@ -17,7 +17,7 @@ namespace Employee.Api.ServiceClient
             serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        public async Task<Employee?> GetEmployeeByLoginAsync(string login)
+        public async Task<EmployeeSC?> GetEmployeeByLoginAsync(string login)
         {
 
             var json = await client.GetStringAsync(
@@ -26,13 +26,21 @@ namespace Employee.Api.ServiceClient
 
             await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
 
-            return await JsonSerializer.DeserializeAsync<Employee>(stream, serializerOptions)
+            return await JsonSerializer.DeserializeAsync<EmployeeSC>(stream, serializerOptions)
                 .ConfigureAwait(false);
         }
 
-       
+        public Task<EmployeeSC?> GetUserInfoAsync()
+        {
+            throw new System.NotImplementedException();
+        }
 
-        public Task<Employee?> GetUserInfoAsync()
+        public Task<bool> IsAdminAsync(string login)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> IsRiskManagementAsync(string login)
         {
             throw new System.NotImplementedException();
         }

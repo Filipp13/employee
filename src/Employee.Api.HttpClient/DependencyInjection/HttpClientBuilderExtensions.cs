@@ -1,10 +1,9 @@
-using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
+using System;
 using System.Net.Http;
-using System.Net;
 
 namespace Employee.Api.ServiceClient
 {
@@ -26,16 +25,10 @@ namespace Employee.Api.ServiceClient
             }
 
             services.Configure<EmployeeServiceOptions>(configuration.GetSection(EmployeeServiceOptions.SectionName));
-            
-            //HttpClientHandler handler = new HttpClientHandler();
-            //handler.Credentials = new NetworkCredential(
-            //    armsCredentials.Login, 
-            //    armsCredentials.Password,
-            //    armsCredentials.Domain);
-            
+
             return services
               .AddHttpClient<IEmployeeApi, EmployeeApi>()
-              //.ConfigurePrimaryHttpMessageHandler(() => handler)
+              .AddHeaderPropagation()
               .SetHandlerLifetime(TimeSpan.FromMinutes(1))
               .AddPolicyHandler(GetRetryPolicy(options.RetryCount, options.RetryDelay))
               .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(options.TryTimeout))
@@ -43,14 +36,14 @@ namespace Employee.Api.ServiceClient
               {
                   client.BaseAddress = new Uri(options.BaseAddress!);
                   client.Timeout = TimeSpan.FromSeconds(options.OverallTimeout);
-                  client.DefaultRequestHeaders.Add("Accept", "application/json;odata=verbose");
               });
         }
 
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(int retryCount, int retryDelay)
         => HttpPolicyExtensions
               .HandleTransientHttpError()
-              .WaitAndRetryAsync(retryCount,
+              .WaitAndRetryAsync(
+                retryCount,
                 retryAttempt => TimeSpan.FromSeconds(Math.Pow(retryDelay, retryAttempt)));
     }
 }

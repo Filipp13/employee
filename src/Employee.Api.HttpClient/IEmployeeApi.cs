@@ -4,8 +4,13 @@ namespace Employee.Api.ServiceClient
 {
     public interface IEmployeeApi
     {
-        Task<Employee?> GetUserInfoAsync();
+        Task<EmployeeSC?> GetUserInfoAsync();
 
-        Task<Employee?> GetEmployeeByLoginAsync(string login);
+        Task<EmployeeSC?> GetEmployeeByLoginAsync(string login);
+
+        Task<bool> IsAdminAsync(string login);
+
+        Task<bool> IsRiskManagementAsync(string login);
+
     }
 }
