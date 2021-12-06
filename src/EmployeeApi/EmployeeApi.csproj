@@ -7,20 +7,27 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile>bin\Debug\net5.0\EmployeeApi.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile>bin\Debug\net5.0\EmployeeApi.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="ADManager" Version="1.0.34" />
 		<PackageReference Include="ArmsHttpClient" Version="1.0.3" />
+		<PackageReference Include="AspNetCore.Metrics" Version="1.0.1" />
+		<PackageReference Include="AspNetCore.SwaggerGen" Version="1.0.1" />
+		<PackageReference Include="AspNetCore.SwaggerUI" Version="1.0.1" />
 		<PackageReference Include="AuthenticationHttpClient" Version="1.0.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
 		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.12" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
 		<PackageReference Include="System.DirectoryServices.Protocols" Version="5.0.0" />
-		<PackageReference Include="App.Metrics.App.All" Version="4.3.0" />
-		<PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="4.3.0" />
-		<PackageReference Include="App.Metrics.Formatters.Prometheus" Version="4.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>

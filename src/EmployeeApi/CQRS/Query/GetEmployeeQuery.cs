@@ -4,7 +4,7 @@ using System;
 
 namespace EmployeeApi
 {
-    public sealed class GetEmployeeQuery : IRequest<EmployeeDto>, ICacheableMediatrQuery
+    public sealed class GetEmployeeQuery : IRequest<EmployeeMvc>, ICacheableMediatrQuery
     {
         public GetEmployeeQuery(
             string login, 

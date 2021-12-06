@@ -5,12 +5,12 @@ namespace EmployeeApi.Controllers
 {
     public sealed class EmployeeForRole
     {
-        public EmployeeForRole(EmployeeDto employee)
+        public EmployeeForRole(EmployeeMvc employee)
         {
             Employee = employee;
         }
 
-        public EmployeeDto Employee { get; set; }
+        public EmployeeMvc Employee { get; set; }
 
         [JsonPropertyName("canBeAssignedToRole")]
         public bool CanBeAssignedToRole { get; set; }

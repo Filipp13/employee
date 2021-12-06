@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeApi
 {
-    internal sealed class GetEmployeeQueryHandler : IRequestHandler<GetEmployeeQuery, EmployeeDto>
+    internal sealed class GetEmployeeQueryHandler : IRequestHandler<GetEmployeeQuery, EmployeeMvc>
     {
         private readonly IEmployeeRepository employeeRepository;
 
@@ -14,8 +14,8 @@ namespace EmployeeApi
             this.employeeRepository = employeeRepository;
         }
 
-        public async Task<EmployeeDto> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
-        => await employeeRepository.EmployeeByLoginAsync(request.Login);
+        public async Task<EmployeeMvc> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
+        => (await employeeRepository.EmployeeByLoginAsync(request.Login)).Map();
      
     }
 }

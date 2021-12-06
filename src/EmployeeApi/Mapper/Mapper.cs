@@ -29,5 +29,19 @@ namespace EmployeeApi
                 employee?.NameFirstRu ?? string.Empty,
                 employee?.NameLastRu ?? string.Empty);
         }
+
+
+        public static EmployeeMvc Map(this EmployeeDto employee)
+            => employee is null ? default : new EmployeeMvc(employee.Id,
+                employee.LastName,
+                employee.FirstName,
+                employee.DisplayName,
+                employee.Title,
+                employee.Email,
+                employee.PhotoURL,
+                employee.Department,
+                employee.AccountName,
+                employee.IsActive,
+                employee.OfficeCity);
     }
 }

@@ -1,65 +1,66 @@
-﻿
-namespace EmployeeApi.Domain
-{
-    public class EmployeeDto
-    {
-        private const string V = "https://rumos2420.atrema.deloitte.com/owa/service.svc/s/GetPersonaPhoto?email=";
-        private const string V1 = "%40deloitte.ru&size=HR240x240&sc=1571655975940";
+﻿using System.Text.Json.Serialization;
 
-        public EmployeeDto(
+namespace EmployeeApi
+{
+    public class EmployeeMvc
+    {
+        public EmployeeMvc(
             int id, 
-            string lastName, 
-            string firstName, 
-            string displayName, 
-            string title, 
+            string surname,
+            string firstName,
+            string displayName,
+            string title,
             string email, 
+            string photoURL,
             string department,
-            string accountName, 
+            string accountName,
             bool isActive, 
             string officeCity)
         {
             Id = id;
-            LastName = lastName;
+            Surname = surname;
             FirstName = firstName;
             DisplayName = displayName;
             Title = title;
             Email = email;
+            PhotoURL = photoURL;
             Department = department;
             AccountName = accountName;
             IsActive = isActive;
             OfficeCity = officeCity;
         }
 
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        [JsonPropertyName("surname")]
+        public string Surname { get; set; }
 
+        [JsonPropertyName("firstName")]
         public string FirstName { get; set; }
 
+        [JsonPropertyName("displayName")]
         public string DisplayName { get; set; }
 
+        [JsonPropertyName("title")]
         public string Title { get; set; }
 
+        [JsonPropertyName("email")]
         public string Email { get; set; }
 
-        public string PhotoURL
-        {
-            get
-            {
-                if (IsActive)
-                    return V + AccountName + V1;
-                else
-                    return string.Empty;
-            }
-        }
+        [JsonPropertyName("photoUrl")]
+        public string PhotoURL { get; set; }
 
+        [JsonPropertyName("department")]
         public string Department { get; set; }
 
+        [JsonPropertyName("accountName")]
         public string AccountName { get; set; }
 
+        [JsonPropertyName("isActive")]
         public bool IsActive { get; set; }
 
+        [JsonPropertyName("officeCity")]
         public string OfficeCity { get; set; }
     }
-
 }

@@ -22,7 +22,7 @@ namespace EmployeeApi.Controllers
         public async Task<ActionResult<EmployeeDto>> GetUserInfoByLgin(string login)
         => await mediator.Send(new GetEmployeeQuery(login)) switch
         {
-            EmployeeDto employee when employee is not null => Ok(employee),
+            EmployeeMvc employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {login} is absent")
         };
 

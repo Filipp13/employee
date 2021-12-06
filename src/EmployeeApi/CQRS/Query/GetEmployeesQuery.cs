@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EmployeeApi
 {
-    public sealed class GetEmployeesQuery : IRequest<IEnumerable<EmployeeDto>>, ICacheableMediatrQuery
+    public sealed class GetEmployeesQuery : IRequest<IEnumerable<EmployeeMvc>>, ICacheableMediatrQuery
     {
         public GetEmployeesQuery(
             string search, 

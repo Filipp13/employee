@@ -21,20 +21,24 @@ namespace EmployeeApi.Controllers
             this.mediator = mediator;
         }
 
+        /// <summary>
+        /// Получает инфу о пользователе(логин берется из токена)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("user-info")]
-        public async Task<ActionResult<EmployeeDto>> GetUserInfoAsync()
+        public async Task<ActionResult<EmployeeMvc>> GetUserInfoAsync()
         => await mediator.Send(new GetEmployeeQuery(User?.Identity?.Name?.Split('@')[0]
             ?? throw new NullReferenceException("User identity is absent, claim: Name"))) switch
         {
-            EmployeeDto employee when employee is not null => Ok(employee),
+            EmployeeMvc employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {User?.Identity?.Name?.Split('@')[0]} is absent")
         };
 
         [HttpGet("user-info/{login}")]
-        public async Task<ActionResult<EmployeeDto>> GetEmployeeByLoginAsync(string login)
+        public async Task<ActionResult<EmployeeMvc>> GetEmployeeByLoginAsync(string login)
         => await mediator.Send(new GetEmployeeQuery(login)) switch
         {
-            EmployeeDto employee when employee is not null => Ok(employee),
+            EmployeeMvc employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {login} is absent")
         };
 
@@ -54,7 +58,7 @@ namespace EmployeeApi.Controllers
         }
 
         [HttpGet("view/{searchString}")]
-        public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployeesAsync(string searchString) 
+        public async Task<ActionResult<IEnumerable<EmployeeMvc>>> GetEmployeesAsync(string searchString) 
         => Ok(await mediator.Send(new GetEmployeesQuery(searchString)));
 
         [HttpGet("view/{searchString}/{roleCode}/{armsid}/{ARMSListId}")]
