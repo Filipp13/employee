@@ -19,8 +19,7 @@
 		<PackageReference Include="ADManager" Version="1.0.34" />
 		<PackageReference Include="ArmsHttpClient" Version="1.0.3" />
 		<PackageReference Include="AspNetCore.Metrics" Version="1.0.1" />
-		<PackageReference Include="AspNetCore.SwaggerGen" Version="1.0.1" />
-		<PackageReference Include="AspNetCore.SwaggerUI" Version="1.0.1" />
+		<PackageReference Include="AspNetCore.Swagger" Version="1.0.0" />
 		<PackageReference Include="AuthenticationHttpClient" Version="1.0.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
