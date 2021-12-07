@@ -24,7 +24,7 @@ FROM base AS final
 
 ENV ASPNETCORE_URLS=http://+:5000
 WORKDIR /app
-COPY /src/EmployeeApi/appsettings.Development.json ./appsettings.json
+COPY /src/Employee.Api/appsettings.Development.json ./appsettings.json
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Employee.Api.dll"]
 EXPOSE 5000
