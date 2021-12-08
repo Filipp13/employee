@@ -34,6 +34,27 @@ namespace Employee.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration["SwaggerGenerator:SwaggerDocs:v1:Title"] = "Employee.Api";
+            Configuration["SwaggerGenerator:SwaggerDocs:v1:Description"] = "Сервис работников";
+
+            Configuration["SwaggerGenerator:SwaggerDocs:v1:TermsOfService"] = "https://cis-confl.deloitteresources.com/display/CPT/PMP";
+
+            Configuration["SwaggerGenerator:SwaggerDocs:v1:Contact:Name"] = "Employee.Api";
+
+            Configuration["SwaggerGenerator:SwaggerDocs:v1:Contact:Email"] = "fantipov@deloitte.ru";
+
+            Configuration["SwaggerGenerator:SwaggerDocs:v1:Contact:Url"] = "https://cis-confl.deloitteresources.com/display/CPT/PMP";
+
+            Configuration["SwaggerUI:RoutePrefix"] = "api/employee/swagger";
+
+            Configuration["SwaggerUI:ConfigObject:Urls:0:Url"] = "/api/employee/swagger/v1/swagger.json";
+
+            Configuration["SwaggerUI:ConfigObject:Urls:0:Name"] = "Employee.Api";
+
+            Configuration["Swagger:RouteTemplate"] = "api/employee/swagger/{documentname}/swagger.json";
+
+
+
             services.AddDistributedMemoryCache();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));

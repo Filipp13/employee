@@ -21,7 +21,7 @@ namespace Employee.Api.Controllers
         }
 
         /// <summary>
-        /// Получает инфу о пользователе(логин берется из токена)
+        /// Получает инфу о пользователе по логину(логин берется из токена)
         /// </summary>
         /// <returns></returns>
         [HttpGet("user-info")]
@@ -33,6 +33,11 @@ namespace Employee.Api.Controllers
             _ => NotFound($"employee with login {User?.Identity?.Name?.Split('@')[0]} is absent")
         };
 
+        /// <summary>
+        /// Получает инфу о пользователе по логину
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpGet("user-info/{login}")]
         public async Task<ActionResult<EmployeeMvc>> GetEmployeeByLoginAsync(string login)
         => await mediator.Send(new GetEmployeeQuery(login)) switch
@@ -41,6 +46,11 @@ namespace Employee.Api.Controllers
             _ => NotFound($"employee with login {login} is absent")
         };
 
+        /// <summary>
+        /// Администратор?
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpGet("is-admin/{login}")]
         public async Task<ActionResult<bool>> IsAdminAsync(string login)
         => await mediator.Send(new IsAdminQuery(login));
