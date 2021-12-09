@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\EmployeeApiDomain\Employee.Api.Domain.csproj" />
+		<ProjectReference Include="..\EmployeeApiDomain\EmployeeApiDomain.csproj" />
 	</ItemGroup>
 
 </Project>
