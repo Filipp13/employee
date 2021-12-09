@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Employee.Api.Domain\Employee.Api.Domain.csproj" />
-    <ProjectReference Include="..\Employee.Api.Infra\Employee.Api.Infra.csproj" />
-    <ProjectReference Include="..\Employee.Api\Employee.Api.csproj" />
+    <ProjectReference Include="..\EmployeeApiDomain\Employee.Api.Domain.csproj" />
+    <ProjectReference Include="..\EmployeeApiInfra\Employee.Api.Infra.csproj" />
+    <ProjectReference Include="..\EmployeeApi\Employee.Api.csproj" />
   </ItemGroup>
 
 </Project>
