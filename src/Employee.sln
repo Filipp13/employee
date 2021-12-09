@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApiDomain", "Employ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApiInfra", "EmployeeApiInfra\EmployeeApiInfra.csproj", "{2DB5B44B-659C-4F37-B70D-1FB176B20A78}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApiTests", "EmployeeApiTests\EmployeeApiTests.csproj", "{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApiTests", "Tests\EmployeeApiTests.csproj", "{743A81F2-5699-4B1A-AC02-6C42F2FBC89C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeApiServiceClient", "EmployeeApiHttpClient\EmployeeApiServiceClient.csproj", "{788A2894-F3E6-4C18-8D3A-E110556D8A73}"
 EndProject
