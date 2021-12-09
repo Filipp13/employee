@@ -23,7 +23,7 @@ RUN dotnet publish "Employee.Api/Employee.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 
 ENV ASPNETCORE_URLS=http://+:5000
-ENV ASPNETCORE_ENVIRONMENT=Development
+
 WORKDIR /app
 COPY /src/Employee.Api/appsettings.Development.json ./appsettings.json
 COPY --from=publish /app/publish .
