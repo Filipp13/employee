@@ -1,3 +1,4 @@
+using AspNetCore.Logger;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -13,6 +14,7 @@ namespace Employee.Api
         public static IHostBuilder CreateHostBuilder(string[] args)
         => Host
             .CreateDefaultBuilder(args)
+            .UseLogger()
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();

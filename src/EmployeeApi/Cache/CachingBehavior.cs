@@ -47,6 +47,10 @@ namespace Employee.Api
             {
 
                 response = await next();
+
+                if (response is null)
+                    return response;
+
                 var slidingExpiration = request.SlidingExpiration == null ? TimeSpan.FromHours(settings.SlidingExpiration) : request.SlidingExpiration;
                 var options = new DistributedCacheEntryOptions { SlidingExpiration = slidingExpiration };
                 var stream = new MemoryStream();
