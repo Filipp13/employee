@@ -15,16 +15,16 @@ WORKDIR /src
 COPY /src .
 
 RUN dotnet nuget add source "https://tb.deloitte.ru/api/v4/groups/119/-/packages/nuget/index.json" --name GitLab --username gitlab_dotnet_read_package --password DczPj981hb22fN6aiyPx --store-password-in-clear-text
-RUN dotnet restore "Employee.Api/Employee.Api.csproj" 
+RUN dotnet restore "EmployeeApi/Employee.Api.csproj" 
 
 FROM build AS publish
-RUN dotnet publish "Employee.Api/Employee.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "EmployeeApi/Employee.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 
 ENV ASPNETCORE_URLS=http://+:5000
 WORKDIR /app
-COPY /src/Employee.Api/appsettings.Development.json ./appsettings.json
+COPY /src/EmployeeApi/appsettings.Development.json ./appsettings.json
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Employee.Api.dll"]
+ENTRYPOINT ["dotnet", "Employee.dll"]
 EXPOSE 5000

@@ -15,7 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("EmployeeApiTests")]
+[assembly: InternalsVisibleTo("Employee.Api.Tests")]
 namespace Employee.Api
 {
     public class Startup

@@ -5,6 +5,7 @@
 		<UserSecretsId>8b9c5007-294b-4e92-a32c-3cc36e6413a8</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<Nullable>enable</Nullable>
+		<AssemblyName>Employee</AssemblyName>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -32,7 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\EmployeeApiDomain\EmployeeApiDomain.csproj" />
+		<ProjectReference Include="..\EmployeeApiDomain\Employee.Api.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

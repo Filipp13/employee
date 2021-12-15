@@ -12,7 +12,7 @@
 	
 
 	<ItemGroup>
-		<ProjectReference Include="..\EmployeeApiInfra\EmployeeApiInfra.csproj" />
+		<ProjectReference Include="..\EmployeeApiInfra\Employee.Api.Infra.csproj" />
 	</ItemGroup>
 
 </Project>
