@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AspNetCore.Cache;
+using MediatR;
 using System;
 
 namespace Employee.Api

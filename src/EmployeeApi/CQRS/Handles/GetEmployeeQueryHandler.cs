@@ -14,7 +14,7 @@ namespace Employee.Api
             this.employeeRepository = employeeRepository;
         }
 
-        public async Task<EmployeeMvc> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
+        public async Task<EmployeeMvc?> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         => (await employeeRepository.EmployeeByLoginAsync(request.Login)).Map();
      
     }

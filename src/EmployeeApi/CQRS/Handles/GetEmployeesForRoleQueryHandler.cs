@@ -58,7 +58,7 @@ namespace Employee.Api
                     _ => (false, string.Empty)
                 };
 
-                var employeeForRole = new EmployeeForRole(empl.Map());
+                var employeeForRole = new EmployeeForRole(empl?.Map());
 
                 //builder
                 employeeForRole.CanBeAssignedToRole = canBeAssignToRole.Item1;

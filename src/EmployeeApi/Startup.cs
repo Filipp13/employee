@@ -1,3 +1,4 @@
+using AspNetCore.Cache;
 using AspNetCore.Metrics;
 using AspNetCore.SwaggerGen;
 using AuthenticationHttpClient;
@@ -29,10 +30,10 @@ namespace Employee.Api
                .AddJsonFile("appsettings.json", optional: false)
                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            Configuration = builder.Build();
+            configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration configuration { get; }
 
         private IAuthenticationApi? authenticationApi { get; set; }
 
@@ -42,8 +43,8 @@ namespace Employee.Api
         {
             services.AddDistributedMemoryCache();
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
-            services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
+
+            services.AddAspNetMediatrCache(configuration.GetSection("CacheSettings").Get<CacheSettings>());
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -63,21 +64,21 @@ namespace Employee.Api
                 });
 
 
-            services.AddInternalServices(Configuration);
+            services.AddInternalServices(configuration);
 
             services.AddControllers();
 
-            services.AddSwagger(currentEnvironment, Configuration);
-            services.ConfigureSwaggerUI(currentEnvironment, Configuration);
+            services.AddSwagger(currentEnvironment, configuration);
+            services.ConfigureSwaggerUI(currentEnvironment, configuration);
 
             services.AddHealthCheck();
-            services.AddPrometheusMetrics(Configuration);
+            services.AddPrometheusMetrics(configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>()
-                ?? throw new Exception("AuthenticationApi is not resolved");
+                ?? throw new ArgumentNullException(nameof(authenticationApi), "AuthenticationApi is not resolved");
 
             if (env.IsDevelopment())
             {

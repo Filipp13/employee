@@ -1,10 +1,10 @@
-﻿using Employee.Api.Domain;
+﻿using AspNetCore.Cache;
 using MediatR;
 using System;
 
 namespace Employee.Api
 {
-    public sealed class GetEmployeeQuery : IRequest<EmployeeMvc>, ICacheableMediatrQuery
+    public sealed class GetEmployeeQuery : IRequest<EmployeeMvc?>, ICacheableMediatrQuery
     {
         public GetEmployeeQuery(
             string login, 

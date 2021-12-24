@@ -1,5 +1,4 @@
-﻿using Employee.Api.Domain;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -19,10 +18,10 @@ namespace Employee.Api.Controllers
         }
 
         [HttpGet("user-info/{login}")]
-        public async Task<ActionResult<EmployeeDto>> GetUserInfoByLgin(string login)
+        public async Task<ActionResult<EmployeeMvc>> GetUserInfoByLogin(string login)
         => await mediator.Send(new GetEmployeeQuery(login)) switch
         {
-            EmployeeMvc employee when employee is not null => Ok(employee),
+            var employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {login} is absent")
         };
 

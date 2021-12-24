@@ -5,7 +5,9 @@
 		<UserSecretsId>8b9c5007-294b-4e92-a32c-3cc36e6413a8</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<Nullable>enable</Nullable>
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<AssemblyName>Employee</AssemblyName>
+		<Version>1.0.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,8 +21,9 @@
 	<ItemGroup>
 		<PackageReference Include="ADManager" Version="1.0.34" />
 		<PackageReference Include="ArmsHttpClient" Version="1.0.3" />
+		<PackageReference Include="AspNetCore.Cache" Version="1.0.0" />
 		<PackageReference Include="AspNetCore.Metrics" Version="1.0.1" />
-		<PackageReference Include="AspNetCore.Logger" Version="1.0.1" />
+		<PackageReference Include="AspNetCore.Logger" Version="1.1.0" />
 		<PackageReference Include="AspNetCore.Swagger" Version="1.0.0" />
 		<PackageReference Include="AuthenticationHttpClient" Version="1.0.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
@@ -30,6 +33,12 @@
 		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.12" />
 		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
 		<PackageReference Include="System.DirectoryServices.Protocols" Version="5.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+		<PackageReference Include="Serilog.Expressions" Version="3.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -31,7 +31,7 @@ namespace Employee.Api
         }
 
 
-        public static EmployeeMvc Map(this EmployeeDto employee)
+        public static EmployeeMvc? Map(this EmployeeDto employee)
             => employee is null ? default : new EmployeeMvc(employee.Id,
                 employee.LastName,
                 employee.FirstName,
