@@ -60,7 +60,7 @@ namespace Employee.Api.Controllers
         {
             if (string.IsNullOrEmpty(login))
             {
-                login = (User?.Identity?.Name?.Split('@')[0] == null ? Environment.UserName : User.Identity.Name.Split('@')[0]);
+                login = User?.Identity?.Name?.Split('@')[0] == null ? throw new NullReferenceException("User identity is absent, claim: Name") : User.Identity.Name.Split('@')[0];
             }
 
             return await mediator.Send(new IsRiskManagementQuery(login));
