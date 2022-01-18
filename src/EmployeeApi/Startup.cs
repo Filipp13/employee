@@ -26,9 +26,9 @@ namespace Employee.Api
             currentEnvironment = env;
 
             var builder = new ConfigurationBuilder()
-               .SetBasePath(env.ContentRootPath)
-               .AddJsonFile("appsettings.json", optional: false)
-               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false)
+            .AddConfigFile(env);
 
             configuration = builder.Build();
         }
