@@ -7,6 +7,8 @@ namespace Employee.Api.Domain
     {
         Task<EmployeeDto> EmployeeByLoginAsync(string login);
 
+        Task<List<EmployeeDto>> EmployeesByLoginsAsync(IEnumerable<string> logins);
+
         Task<List<EmployeeDto>> SearchEmployeeByDisplayNameAsync(string search);
 
         Task<int> UpdateEmployeesAsync(IEnumerable<EmployeeUpdateDto> employees);

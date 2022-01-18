@@ -47,7 +47,7 @@ namespace Employee.Api.Controllers
         };
 
         /// <summary>
-        /// Администратор?
+        /// Администратор? вхождение в группу AD 'CIS Trinity Admins'
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
@@ -55,6 +55,11 @@ namespace Employee.Api.Controllers
         public async Task<ActionResult<bool>> IsAdminAsync(string login)
         => await mediator.Send(new IsAdminQuery(login));
 
+        /// <summary>
+        /// Менеджер? вхождение в группу AD 'CIS Trinity Admins' или 'CIS Trinity RM'
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpGet("is-risk-management/{login}")]
         public async Task<ActionResult<bool>> IsRiskManagementAsync(string login)
         {
@@ -66,6 +71,11 @@ namespace Employee.Api.Controllers
             return await mediator.Send(new IsRiskManagementQuery(login));
         }
 
+        /// <summary>
+        /// поиск сотрудников по ФИО начиная с трех символов, отображая первые 10
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         [HttpGet("view/{searchString}")]
         public async Task<ActionResult<IEnumerable<EmployeeMvc>>> GetEmployeesAsync(string searchString) 
         => Ok(await mediator.Send(new GetEmployeesQuery(searchString)));

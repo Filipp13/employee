@@ -23,6 +23,12 @@ namespace Employee.Api.Domain
         => (await practiceManagementContext.Employees
             .FirstOrDefaultAsync(e => e.AccountName.Equals(login))).Map();
 
+        public Task<List<EmployeeDto>> EmployeesByLoginsAsync(IEnumerable<string> logins)
+        => practiceManagementContext.Employees
+            .Where(emp => logins.Contains(emp.AccountName))
+            .Select(emp => emp.Map())
+            .ToListAsync();
+
         public async Task<Dictionary<string, EmployeeSAPDto>> GetEmployeeSAPDtoAsync()
         => await peopleContext.VPersonDepAndBus
             .Select(p => p.Map())
