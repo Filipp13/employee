@@ -1,11 +1,11 @@
-﻿using EmployeeApi.Domain;
+﻿using AspNetCore.Cache;
 using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
-    public sealed class GetEmployeesQuery : IRequest<IEnumerable<EmployeeDto>>, ICacheableMediatrQuery
+    public sealed class GetEmployeesQuery : IRequest<IEnumerable<EmployeeMvc>>, ICacheableMediatrQuery
     {
         public GetEmployeesQuery(
             string search, 

@@ -1,4 +1,4 @@
-﻿namespace EmployeeApi
+﻿namespace Employee.Api
 {
     public interface IRolesManagment
     {

@@ -1,7 +1,7 @@
-﻿using EmployeeApi.Domain;
+﻿using Employee.Api.Domain;
 using System.Collections.Generic;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public static class Mapper
     {
@@ -18,16 +18,30 @@ namespace EmployeeApi
                 e?.ObjectSid!,
                 lastName!,
                 firstName!,
-                e.DisplayName!,
+                e?.DisplayName!,
                 e?.Email ?? Unknown,
                 e?.Title ?? Unknown,
                 e?.SamAccountName!,
                 e?.City ?? Unknown,
                 e?.Grade!,
-                (e.UserAccountControl / 2) % 2 == 0,
+                (e?.UserAccountControl / 2) % 2 == 0,
                 employee?.Department ?? Unknown,
                 employee?.NameFirstRu ?? string.Empty,
                 employee?.NameLastRu ?? string.Empty);
         }
+
+
+        public static EmployeeMvc? Map(this EmployeeDto employee)
+            => employee is null ? default : new EmployeeMvc(employee.Id,
+                employee.LastName,
+                employee.FirstName,
+                employee.DisplayName,
+                employee.Title,
+                employee.Email,
+                employee.PhotoURL,
+                employee.Department,
+                employee.AccountName,
+                employee.IsActive,
+                employee.OfficeCity);
     }
 }

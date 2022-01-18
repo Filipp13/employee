@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public sealed class RolesManagment : IRolesManagment
     {

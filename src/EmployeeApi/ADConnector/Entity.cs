@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public abstract class Entity<T, U>
         where T : class

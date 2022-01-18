@@ -1,10 +1,10 @@
-﻿using EmployeeApi.Domain;
+﻿using Employee.Api.Domain;
 using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public class ImportEmployeeCommandHandler : IRequestHandler<ImportEmployeeCommand, int>
     {
