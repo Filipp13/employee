@@ -1,14 +1,14 @@
 ﻿using ADManager;
 using ArmsHttpClient;
-using EmployeeApi.Controllers;
-using EmployeeApi.Domain;
+using Employee.Api.Controllers;
+using Employee.Api.Domain;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     internal sealed class GetEmployeesForRoleQueryHandler : IRequestHandler<GetEmployeesForRoleQuery, IEnumerable<EmployeeForRole>>
     {
@@ -58,7 +58,7 @@ namespace EmployeeApi
                     _ => (false, string.Empty)
                 };
 
-                var employeeForRole = new EmployeeForRole(empl);
+                var employeeForRole = new EmployeeForRole(empl?.Map());
 
                 //builder
                 employeeForRole.CanBeAssignedToRole = canBeAssignToRole.Item1;

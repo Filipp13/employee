@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     internal sealed class IsAdminQueryHandler : IRequestHandler<IsAdminQuery, bool>
     {
