@@ -7,7 +7,7 @@ namespace Employee.Api
     {
         private const string Unknown = "Unknown";
 
-        public static EmployeeUpdateDto Map(this EmployeeAD e, Dictionary<string, EmployeeSAPDto> dictEmployees)
+        public static EmployeeUpdateDto Map(this EmployeeAD e, in Dictionary<string, EmployeeSAPDto> dictEmployees)
         {
             var employee = dictEmployees.GetValueOrDefault(e.SamAccountName);
 

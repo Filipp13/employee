@@ -27,7 +27,7 @@ namespace Employee.Api.Controllers
         [HttpGet("user-info")]
         public async Task<ActionResult<EmployeeMvc>> GetUserInfoAsync()
         => await mediator.Send(new GetEmployeeQuery(User?.Identity?.Name?.Split('@')[0]
-            ?? throw new NullReferenceException("User identity is absent, claim: Name"), true)) switch
+            ?? throw new NullReferenceException("User identity is absent, claim: Name"))) switch
         {
             EmployeeMvc employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {User?.Identity?.Name?.Split('@')[0]} is absent")
@@ -40,7 +40,7 @@ namespace Employee.Api.Controllers
         /// <returns></returns>
         [HttpGet("user-info/{login}")]
         public async Task<ActionResult<EmployeeMvc>> GetEmployeeByLoginAsync(string login)
-        => await mediator.Send(new GetEmployeeQuery(login, true)) switch
+        => await mediator.Send(new GetEmployeeQuery(login)) switch
         {
             EmployeeMvc employee when employee is not null => Ok(employee),
             _ => NotFound($"employee with login {login} is absent")
@@ -87,15 +87,6 @@ namespace Employee.Api.Controllers
             roleCode,
             armsid,
             armsListId)));
-
-        /// <summary>
-        /// Получает инфу о пользователях по логинам, возвращает все что смог найти
-        /// </summary>
-        /// <param name="logins"></param>
-        /// <returns></returns>
-        [HttpPost("user-info/batch")]
-        public async Task<ActionResult<IEnumerable<EmployeeMvc>>> GetEmployeesByLoginsAsync(string[] logins)
-        => Ok(await mediator.Send(new GetEmployeesByLoginsQuery(logins, true)));
 
     }
 }
