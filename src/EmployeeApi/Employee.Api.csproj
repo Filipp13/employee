@@ -11,11 +11,11 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DocumentationFile>bin\Debug\net5.0\Employee.Api.xml</DocumentationFile>
+	  <DocumentationFile>bin\Debug\net6.0\Employee.Api.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DocumentationFile>bin\Debug\net5.0\Employee.Api.xml</DocumentationFile>
+		<DocumentationFile>bin\Debug\net6.0\Employee.Api.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
