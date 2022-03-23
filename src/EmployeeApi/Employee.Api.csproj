@@ -21,7 +21,7 @@
 	<ItemGroup>
 		<PackageReference Include="ADManager" Version="1.0.34" />
 		<PackageReference Include="ArmsHttpClient" Version="1.0.3" />
-		<PackageReference Include="AspNetCore.Cache" Version="1.1.0" />
+		<PackageReference Include="AspNetCore.Cache" Version="2.1.1" />
 		<PackageReference Include="AspNetCore.Metrics" Version="1.0.1" />
 		<PackageReference Include="AspNetCore.Logger" Version="1.1.0" />
 		<PackageReference Include="AspNetCore.Swagger" Version="1.1.0" />
