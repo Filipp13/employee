@@ -66,6 +66,7 @@ namespace Employee.Api
 
             services.AddInternalServices(configuration);
 
+            services.AddGrpc();
             services.AddControllers();
 
             services.AddSwagger(currentEnvironment, configuration);
@@ -86,8 +87,6 @@ namespace Employee.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthentication();
@@ -96,6 +95,7 @@ namespace Employee.Api
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<EmployeeGrpcService>();
                 endpoints.MapControllers();
                 endpoints.UseHealthCheck();
             });

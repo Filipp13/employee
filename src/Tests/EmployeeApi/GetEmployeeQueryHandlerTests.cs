@@ -9,9 +9,10 @@ namespace Employee.Api.Tests.Employee.Api
         [Fact]
         public async void UpdateCustomerCommand_CustomerDataUpdatedOnDatabase()
         {
+            var mapper = new Mock<IMapper>();
             var repository = new Mock<IEmployeeRepository>();
             var query = new GetEmployeeQuery("login");
-            var handler = new GetEmployeeQueryHandler(repository.Object);
+            var handler = new GetEmployeeQueryHandler(repository.Object, mapper.Object);
 
             await handler.Handle(query, new System.Threading.CancellationToken());
 

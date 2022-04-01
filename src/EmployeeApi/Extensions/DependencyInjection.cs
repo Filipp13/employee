@@ -43,6 +43,7 @@ namespace Employee.Api
 
         public static IServiceCollection AddInternalServices(this IServiceCollection services, IConfiguration Configuration)
         => services
+            .AddSingleton<IMapper, Mapper>()
             .AddTransient(typeof(Entity<EmployeeAD, SearchResultEntry>), typeof(EmployeeMapper))
             .AddTransient(typeof(IADManagmentEntity<,>), typeof(ADManagment<,>))
             .AddAuthenticationServiceClient(Configuration).Services

@@ -1,5 +1,6 @@
 using AspNetCore.Logger;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
 
 namespace Employee.Api
@@ -17,6 +18,14 @@ namespace Employee.Api
             .UseLogger()
             .ConfigureWebHostDefaults(webBuilder =>
             {
+                webBuilder.ConfigureKestrel(options =>
+                {
+                    options.ListenAnyIP(5000, listenOptions =>
+                           listenOptions.Protocols = HttpProtocols.Http1);
+
+                    options.ListenAnyIP(5002, listenOptions =>
+                            listenOptions.Protocols = HttpProtocols.Http2);
+                });
                 webBuilder.UseStartup<Startup>();
             });
 

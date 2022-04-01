@@ -20,19 +20,22 @@ namespace Employee.Api
         private readonly IADManager aDManager;
         private readonly IRolesManagment rolesManagment;
         private readonly string armsList;
+        private readonly IMapper mapper;
 
         public GetEmployeesForRoleQueryHandler(
             IEmployeeRepository employeeRepository,
             IArmsApi armsApi,
             IADManager aDManager,
             IRolesManagment rolesManagment,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IMapper mapper)
         {
             this.employeeRepository = employeeRepository;
             this.armsApi = armsApi;
             this.aDManager = aDManager;
             this.rolesManagment = rolesManagment;
             armsList = configuration.GetValue<string>("ARMSActiveListGUID");
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<EmployeeForRole>> Handle(GetEmployeesForRoleQuery request, CancellationToken cancellationToken)
@@ -58,7 +61,7 @@ namespace Employee.Api
                     _ => (false, string.Empty)
                 };
 
-                var employeeForRole = new EmployeeForRole(empl?.Map());
+                var employeeForRole = new EmployeeForRole(mapper.Map(empl));
 
                 //builder
                 employeeForRole.CanBeAssignedToRole = canBeAssignToRole.Item1;

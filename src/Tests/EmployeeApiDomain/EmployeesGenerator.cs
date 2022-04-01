@@ -21,7 +21,9 @@ namespace Employee.Api.Tests
                     DisplayName = $"DisplayName{i}",
                     Email = $"Email{i}",
                     Title = $"Title{i}",
-                    IsActive = true
+                    IsActive = true,
+                    Grade = "grade",
+                    ObjectSid = new byte[0]
                 });
             }
             return list;

@@ -8,14 +8,18 @@ namespace Employee.Api
     internal sealed class GetEmployeeQueryHandler : IRequestHandler<GetEmployeeQuery, EmployeeMvc>
     {
         private readonly IEmployeeRepository employeeRepository;
+        private readonly IMapper mapper;
 
-        public GetEmployeeQueryHandler(IEmployeeRepository employeeRepository)
+        public GetEmployeeQueryHandler(
+            IEmployeeRepository employeeRepository,
+            IMapper mapper)
         {
             this.employeeRepository = employeeRepository;
+            this.mapper = mapper;
         }
 
         public async Task<EmployeeMvc?> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
-        => (await employeeRepository.EmployeeByLoginAsync(request.Login)).Map();
+        => mapper.Map(await employeeRepository.EmployeeByLoginAsync(request.Login));
      
     }
 }

@@ -1,13 +1,14 @@
 ﻿using Employee.Api.Domain;
+using EmployeeGrpcService;
 using System.Collections.Generic;
 
 namespace Employee.Api
 {
-    public static class Mapper
+    public class Mapper : IMapper
     {
         private const string Unknown = "Unknown";
 
-        public static EmployeeUpdateDto Map(this EmployeeAD e, in Dictionary<string, EmployeeSAPDto> dictEmployees)
+        public EmployeeUpdateDto Map(EmployeeAD e, in Dictionary<string, EmployeeSAPDto> dictEmployees)
         {
             var employee = dictEmployees.GetValueOrDefault(e.SamAccountName);
 
@@ -30,8 +31,7 @@ namespace Employee.Api
                 employee?.NameLastRu ?? string.Empty);
         }
 
-
-        public static EmployeeMvc? Map(this EmployeeDto employee)
+        public EmployeeMvc? Map(EmployeeDto employee)
             => employee is null ? default : new EmployeeMvc(employee.Id,
                 employee.LastName,
                 employee.FirstName,
@@ -43,5 +43,28 @@ namespace Employee.Api
                 employee.AccountName,
                 employee.IsActive,
                 employee.OfficeCity);
+
+        public UserInfoResponse Map(EmployeeMvc employee)
+        => new UserInfoResponse()
+        {
+            Id = employee.Id,
+            FirstName = employee.FirstName,
+            DisplayName = employee.DisplayName,
+            AccountName = employee.AccountName,
+            Department = employee.Department,
+            Email = employee.Email,
+            IsActive = employee.IsActive,
+            OfficeCity = employee.OfficeCity,
+            PhotoURL = employee.PhotoURL,
+            Surname = employee.Surname,
+            Title = employee.Title,
+        };
+
+        public IsAdminResponse MapAdminResponse(bool isAdmin)
+        => new IsAdminResponse() { IsAdmin = isAdmin };
+
+        public IsRiskManagementResponse MapRiskManagementResponse(bool isRiskManagement)
+        => new IsRiskManagementResponse() { IsRiskManagement = isRiskManagement };
+
     }
 }
