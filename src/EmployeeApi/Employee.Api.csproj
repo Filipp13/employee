@@ -20,7 +20,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Protobuf Include="..\..\employee.proto" GrpcServices="Server" />
+		<Protobuf Include="..\employee.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 	<ItemGroup>
