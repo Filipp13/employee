@@ -1,7 +1,8 @@
-using ArmsHttpClient;
+using AspNetCore.Cache;
+using AspNetCore.Metrics;
+using AspNetCore.SwaggerGen;
 using AuthenticationHttpClient;
-using EmployeeApi.Domain;
-using EmployeeApi.Infra;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,121 +10,82 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using SP.Core.AspNetCore.SwaggerUI;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using MediatR;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using ADManager;
-using System.DirectoryServices.Protocols;
 
-[assembly: InternalsVisibleTo("EmployeeApi.Tests")]
-namespace EmployeeApi
+[assembly: InternalsVisibleTo("Employee.Api.Tests")]
+namespace Employee.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            currentEnvironment = env;
+
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false)
+            .AddConfigFile(env);
+
+            configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration configuration { get; }
 
-        private IAuthenticationApi? authenticationApi;
+        private IAuthenticationApi? authenticationApi { get; set; }
+
+        private IWebHostEnvironment currentEnvironment { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDistributedMemoryCache();
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
-            services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
 
-            services.AddTransient(typeof(Entity<EmployeeAD, SearchResultEntry>), typeof(EmployeeMapper));
-            services.AddTransient(typeof(IADManagmentEntity<,>), typeof(ADManagment<,>));
+            services.AddAspNetMediatrCache(configuration.GetSection("CacheSettings").Get<CacheSettings>());
 
-            services.AddAuthenticationServiceClient(Configuration);
-            services.AddArmsServiceClient(
-                Configuration, 
-                new ArmsCredentials(
-                    Environment.GetEnvironmentVariable("UserArmsLogin")
-                        ?? throw new Exception("UserArmsLogin"),
-                    Environment.GetEnvironmentVariable("UserArmsPassword")
-                        ?? throw new Exception("UserArmsPassword"),
-                    "atrema"));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = "Auth Service",
-                    NameClaimType = "Login",
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = false,
-                    ValidateLifetime = false,
-                    SignatureValidator = SignatureValidator
-                };
-            });
-
-            services.AddPracticeManagementContext(Configuration);
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddSingleton<IRolesManagment, RolesManagment>();
-            services.AddADManagment(Configuration);
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                //c.SwaggerDoc("v1", new Info { Title = "You api title", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      \r\n\r\nExample: 'Bearer 12345abcdef'",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                {
-                    new OpenApiSecurityScheme
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                    Reference = new OpenApiReference
-                        {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                        },
-                        Scheme = "oauth2",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header,
-
-                    },
-                    new List<string>()
-                    }
+                        ValidateIssuer = true,
+                        ValidIssuer = "Auth Service",
+                        NameClaimType = "Login",
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = false,
+                        ValidateLifetime = false,
+                        SignatureValidator = SignatureValidator
+                    };
                 });
 
-            });
+
+            services.AddInternalServices(configuration);
+
+            services.AddGrpc();
+            services.AddControllers();
+
+            services.AddSwagger(currentEnvironment, configuration);
+            services.ConfigureSwaggerUI(currentEnvironment, configuration);
+
+            services.AddHealthCheck();
+            services.AddPrometheusMetrics(configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>() 
-                ?? throw new Exception("AuthenticationApi is not resolved");
-
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            authenticationApi = app.ApplicationServices.GetService<IAuthenticationApi>()
+                ?? throw new ArgumentNullException(nameof(authenticationApi), "AuthenticationApi is not resolved");
 
             if (env.IsDevelopment())
             {
+
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -133,7 +95,9 @@ namespace EmployeeApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<EmployeeGrpcService>();
                 endpoints.MapControllers();
+                endpoints.UseHealthCheck();
             });
         }
 

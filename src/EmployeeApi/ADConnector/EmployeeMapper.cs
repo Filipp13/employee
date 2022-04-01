@@ -1,7 +1,7 @@
 ﻿using System;
 using System.DirectoryServices.Protocols;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public class EmployeeMapper : Entity<EmployeeAD, SearchResultEntry>
     {

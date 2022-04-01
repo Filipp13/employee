@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "EmployeeGrpcService";
+
+service EmployeeGrpc {
+	rpc GetUserInfo (UserInfoRequest) returns (UserInfoResponse);
+	rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+	rpc IsRiskManagement (IsRiskManagementRequest) returns (IsRiskManagementResponse);
+}
+
+message UserInfoRequest {
+	string login = 1;
+}
+
+message UserInfoResponse {
+	int32 id = 1;
+	string surname = 2;
+	string firstName = 3;
+	string displayName = 4;
+	string title = 5;
+	string email = 6; 
+	string photoURL = 7;
+	string department = 8;
+	string accountName = 9;
+	bool isActive = 10;
+	string officeCity = 11;
+}
+
+message IsAdminRequest {
+	string login = 1;
+}
+
+message IsAdminResponse {
+	bool isAdmin = 1;
+}
+
+message IsRiskManagementRequest {
+	string login = 1;
+}
+
+message IsRiskManagementResponse {
+	bool isRiskManagement = 1;
+}
