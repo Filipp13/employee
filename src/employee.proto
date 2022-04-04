@@ -4,8 +4,7 @@ option csharp_namespace = "EmployeeGrpcService";
 
 service EmployeeGrpc {
 	rpc GetUserInfo (UserInfoRequest) returns (UserInfoResponse);
-	rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
-	rpc IsRiskManagement (IsRiskManagementRequest) returns (IsRiskManagementResponse);
+	rpc GetEmployeesByLoginsAsync (EmployeesRequest) returns (EmployeesResponse);
 }
 
 message UserInfoRequest {
@@ -26,18 +25,10 @@ message UserInfoResponse {
 	string officeCity = 11;
 }
 
-message IsAdminRequest {
-	string login = 1;
+message EmployeesRequest {
+	repeated string logins = 1;
 }
 
-message IsAdminResponse {
-	bool isAdmin = 1;
-}
-
-message IsRiskManagementRequest {
-	string login = 1;
-}
-
-message IsRiskManagementResponse {
-	bool isRiskManagement = 1;
+message EmployeesResponse {
+	repeated UserInfoResponse users = 1;
 }
