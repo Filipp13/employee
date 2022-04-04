@@ -7,7 +7,7 @@
 		<Nullable>enable</Nullable>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<AssemblyName>Employee</AssemblyName>
-		<Version>1.2.0</Version>
+		<Version>1.2.1</Version>
 		<DockerfileRunArguments>-p 5000:5000 -p 5002:5002</DockerfileRunArguments>
 	</PropertyGroup>
 

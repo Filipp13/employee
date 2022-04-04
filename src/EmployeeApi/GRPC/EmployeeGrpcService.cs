@@ -31,10 +31,7 @@ namespace Employee.Api
             _ => throw new RpcException(new Status(StatusCode.NotFound, $"employee with login {request.Login} is absent"))
         };
 
-        public async override Task<IsAdminResponse> IsAdmin(IsAdminRequest request, ServerCallContext context)
-        => mapper.MapAdminResponse(await mediator.Send(new IsAdminQuery(request.Login)));
-
-        public async override Task<IsRiskManagementResponse> IsRiskManagement(IsRiskManagementRequest request, ServerCallContext context)
-        => mapper.MapRiskManagementResponse(await mediator.Send(new IsRiskManagementQuery(request.Login)));
+        public async override Task<EmployeesResponse> GetEmployeesByLoginsAsync(EmployeesRequest request, ServerCallContext context)
+        => mapper.Map(await mediator.Send(new GetEmployeesByLoginsQuery(request.Logins)));
     }
 }

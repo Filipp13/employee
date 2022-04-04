@@ -1,6 +1,7 @@
 ﻿using Employee.Api.Domain;
 using EmployeeGrpcService;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Employee.Api
 {
@@ -60,11 +61,11 @@ namespace Employee.Api
             Title = employee.Title,
         };
 
-        public IsAdminResponse MapAdminResponse(bool isAdmin)
-        => new IsAdminResponse() { IsAdmin = isAdmin };
-
-        public IsRiskManagementResponse MapRiskManagementResponse(bool isRiskManagement)
-        => new IsRiskManagementResponse() { IsRiskManagement = isRiskManagement };
-
+        public EmployeesResponse Map(IEnumerable<EmployeeMvc> users)
+        {
+            var response = new EmployeesResponse();
+            response.Users.Add(users.Select(Map));
+            return response;
+        }
     }
 }

@@ -12,9 +12,7 @@ namespace Employee.Api
 
         public UserInfoResponse Map(EmployeeMvc employee);
 
-        public IsAdminResponse MapAdminResponse(bool isAdmin);
-
-        public IsRiskManagementResponse MapRiskManagementResponse(bool isRiskManagement);
+        public EmployeesResponse Map(IEnumerable<EmployeeMvc> users);
 
     }
 }
