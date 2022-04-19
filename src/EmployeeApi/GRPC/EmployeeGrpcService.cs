@@ -1,13 +1,11 @@
 using EmployeeGrpcService;
 using Grpc.Core;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Employee.Api
 {
-    [Authorize]
     public class EmployeeGrpcService : EmployeeGrpc.EmployeeGrpcBase
     {
         private readonly ILogger<EmployeeGrpcService> logger;
