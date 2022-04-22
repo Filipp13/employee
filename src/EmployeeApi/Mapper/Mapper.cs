@@ -49,16 +49,16 @@ namespace Employee.Api
         => new UserInfoResponse()
         {
             Id = employee.Id,
-            FirstName = employee.FirstName,
-            DisplayName = employee.DisplayName,
-            AccountName = employee.AccountName,
-            Department = employee.Department,
-            Email = employee.Email,
+            FirstName = employee.FirstName ?? string.Empty,
+            DisplayName = employee.DisplayName ?? string.Empty,
+            AccountName = employee.AccountName ?? string.Empty,
+            Department = employee.Department ?? string.Empty,
+            Email = employee.Email ?? string.Empty,
             IsActive = employee.IsActive,
-            OfficeCity = employee.OfficeCity,
-            PhotoURL = employee.PhotoURL,
-            Surname = employee.Surname,
-            Title = employee.Title,
+            OfficeCity = employee.OfficeCity ?? string.Empty,
+            PhotoURL = employee.PhotoURL ?? string.Empty,
+            Surname = employee.Surname ?? string.Empty,
+            Title = employee.Title ?? string.Empty,
         };
 
         public EmployeesResponse Map(IEnumerable<EmployeeMvc> users)
