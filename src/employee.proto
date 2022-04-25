@@ -4,7 +4,7 @@ option csharp_namespace = "EmployeeGrpcService";
 
 service EmployeeGrpc {
 	rpc GetUserInfo (UserInfoRequest) returns (UserInfoResponse);
-	rpc GetEmployeesByLoginsAsync (EmployeesRequest) returns (EmployeesResponse);
+	rpc GetEmployeesByLogins (EmployeesRequest) returns (EmployeesResponse);
 }
 
 message UserInfoRequest {
