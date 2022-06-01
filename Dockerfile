@@ -14,7 +14,6 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
 COPY /src .
 
-RUN dotnet nuget add source "https://tb.deloitte.ru/api/v4/groups/119/-/packages/nuget/index.json" --name GitLab --username gitlab_dotnet_read_package --password DczPj981hb22fN6aiyPx --store-password-in-clear-text
 RUN dotnet restore "EmployeeApi/Employee.Api.csproj" 
 
 FROM build AS publish
