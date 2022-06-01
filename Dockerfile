@@ -12,9 +12,10 @@ RUN apt-get update -y \
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY /src .
 
-RUN dotnet restore "EmployeeApi/Employee.Api.csproj" 
+COPY /src .
+COPY nuget.config .
+RUN dotnet restore "Employee.sln" --configfile ./nuget.config
 
 FROM build AS publish
 RUN dotnet publish "EmployeeApi/Employee.Api.csproj" -c Release -o /app/publish
