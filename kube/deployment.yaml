@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: _PROJECT_NAME_, namespace: _NAMESPACE_, labels: {pod: _PROJECT_NAME_, version_tag: _VERSION_TAG_}}
+spec:
+  replicas: 1
+  selector: {matchLabels: {pod: _PROJECT_NAME_}}
+  template:
+    metadata: {labels: {pod: _PROJECT_NAME_}}
+    spec:
+      restartPolicy: Always
+      volumes:
+      - {name: _PROJECT_NAME_-map-vol, configMap: {name: _PROJECT_NAME_-cm}}
+      - {name: _PROJECT_NAME_-tmp, emptyDir: {}}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 56243
+        runAsGroup: 43987
+        fsGroup: 10467
+        fsGroupChangePolicy: "OnRootMismatch"
+      containers:
+      - name: _PROJECT_NAME_
+        image: _IMAGE_NAME_
+        imagePullPolicy: IfNotPresent
+        ports: [{containerPort: 5000, name: tcp5000}, {containerPort: 5002, name: tcp5002}]
+        volumeMounts:
+        - {name: _PROJECT_NAME_-map-vol, subPath: appsettings.json, mountPath: /app/appsettings.json}
+        - {name: _PROJECT_NAME_-tmp, mountPath: /tmp}
+        envFrom:
+        - secretRef: {name: _PROJECT_NAME_-sec}
+        - configMapRef: {name: _PROJECT_NAME_-map}
+        resources:
+          limits: {cpu: "150m", memory: "128Mi"}
+          requests: {cpu: "100m", memory: "64Mi"}
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false

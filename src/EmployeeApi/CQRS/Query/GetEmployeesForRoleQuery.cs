@@ -1,9 +1,9 @@
-﻿using EmployeeApi.Controllers;
+﻿using AspNetCore.Cache;
 using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public sealed class GetEmployeesForRoleQuery : IRequest<IEnumerable<EmployeeForRole>>, ICacheableMediatrQuery
     {

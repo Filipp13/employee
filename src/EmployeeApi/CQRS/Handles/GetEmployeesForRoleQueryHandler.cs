@@ -1,14 +1,14 @@
 ﻿using ADManager;
 using ArmsHttpClient;
-using EmployeeApi.Controllers;
-using EmployeeApi.Domain;
+using Employee.Api.Controllers;
+using Employee.Api.Domain;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     internal sealed class GetEmployeesForRoleQueryHandler : IRequestHandler<GetEmployeesForRoleQuery, IEnumerable<EmployeeForRole>>
     {
@@ -20,19 +20,22 @@ namespace EmployeeApi
         private readonly IADManager aDManager;
         private readonly IRolesManagment rolesManagment;
         private readonly string armsList;
+        private readonly IMapper mapper;
 
         public GetEmployeesForRoleQueryHandler(
             IEmployeeRepository employeeRepository,
             IArmsApi armsApi,
             IADManager aDManager,
             IRolesManagment rolesManagment,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IMapper mapper)
         {
             this.employeeRepository = employeeRepository;
             this.armsApi = armsApi;
             this.aDManager = aDManager;
             this.rolesManagment = rolesManagment;
             armsList = configuration.GetValue<string>("ARMSActiveListGUID");
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<EmployeeForRole>> Handle(GetEmployeesForRoleQuery request, CancellationToken cancellationToken)
@@ -58,7 +61,7 @@ namespace EmployeeApi
                     _ => (false, string.Empty)
                 };
 
-                var employeeForRole = new EmployeeForRole(empl);
+                var employeeForRole = new EmployeeForRole(mapper.Map(empl));
 
                 //builder
                 employeeForRole.CanBeAssignedToRole = canBeAssignToRole.Item1;

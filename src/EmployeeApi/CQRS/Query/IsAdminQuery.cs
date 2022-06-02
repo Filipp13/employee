@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿using AspNetCore.Cache;
+using MediatR;
 using System;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public sealed class IsAdminQuery : IRequest<bool>, ICacheableMediatrQuery
     {

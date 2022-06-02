@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public interface IADManagmentEntity<Entity, EntityMapper> where Entity : class
     {

@@ -5,7 +5,7 @@ using System.DirectoryServices.Protocols;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeeApi
+namespace Employee.Api
 {
     public sealed class ADManagment<Entity, EntityMapper> : ADManagerBase, IADManagmentEntity<Entity, EntityMapper> 
         where Entity : class
@@ -18,7 +18,8 @@ namespace EmployeeApi
         private readonly Entity<Entity, SearchResultEntry> entity;
         public ADManagment(
             IOptions<ADManagerOptions> aDManagmentOptions,
-            Entity<Entity, SearchResultEntry> entity) : base(aDManagmentOptions) =>
+            ADManagerSecurityOptions aDManagerSecurityOptions,
+            Entity<Entity, SearchResultEntry> entity) : base(aDManagmentOptions, aDManagerSecurityOptions) =>
                 this.entity = entity;
 
         public async Task<List<Entity>> GetEntityOfT()

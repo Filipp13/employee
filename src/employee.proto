@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "EmployeeGrpcService";
+
+service EmployeeGrpc {
+	rpc GetUserInfo (UserInfoRequest) returns (UserInfoResponse);
+	rpc GetEmployeesByLogins (EmployeesRequest) returns (EmployeesResponse);
+}
+
+message UserInfoRequest {
+	string login = 1;
+}
+
+message UserInfoResponse {
+	int32 id = 1;
+	string surname = 2;
+	string firstName = 3;
+	string displayName = 4;
+	string title = 5;
+	string email = 6; 
+	string photoURL = 7;
+	string department = 8;
+	string accountName = 9;
+	bool isActive = 10;
+	string officeCity = 11;
+}
+
+message EmployeesRequest {
+	repeated string logins = 1;
+}
+
+message EmployeesResponse {
+	repeated UserInfoResponse users = 1;
+}
