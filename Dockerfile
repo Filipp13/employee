@@ -1,5 +1,3 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS base
 
 WORKDIR /app
@@ -22,7 +20,7 @@ RUN dotnet publish "EmployeeApi/Employee.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 
-ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_URLS=http://+:7000
 WORKDIR /app
 COPY /src/EmployeeApi/appsettings.Development.json ./appsettings.json
 COPY --from=publish /app/publish .
