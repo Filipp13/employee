@@ -5,15 +5,15 @@ metadata: {name: employee-cm, namespace: _NAMESPACE_}
 data:
   appsettings.json : |
     {
-    "Logging": {
-    "MinimumLevel": {
-      "Default": "Debug",
-      "Override": {
-        "Microsoft": "Information",
-        "Microsoft.Hosting.Lifetime": "Information"
-      }
-    }
-    },
+      "Logging": {
+        "MinimumLevel": {
+          "Default": "Debug",
+          "Override": {
+            "Microsoft": "Information",
+            "Microsoft.Hosting.Lifetime": "Information"
+          }
+        }
+      },
       "ConnectionStrings": {
         "PracticeManagement": "Data Source=RUMOS0929.RUBY.DRTRUS.RU;Initial Catalog=PracticeManagementQA;MultipleActiveResultSets=true;",
         "People": "Data Source=RUMOS0255.RUBY.DRTRUS.RU;Initial Catalog=People;MultipleActiveResultSets=true;"
@@ -34,34 +34,18 @@ data:
       "CacheSettings": {
         "SlidingExpiration": 1
       },
-      "SwaggerGenerator": {
-          "SwaggerDocs": {
-            "v1": {
-              "Title": "Employee.Api",
-              "Description": "Employee service",
-              "TermsOfService": "https://cis-confl.deloitteresources.com/display/CPT/PMP",
-              "Contact": {
-                "Name": "PMP Team",
-                "Email": "fantipov@delret.ru",
-                "Url": "https://cis-confl.deloitteresources.com/display/CPT/PMP"
-              }
-            }
+      "Kestrel": {
+        "Endpoints": {
+          "Http": {
+            "Url": "https://localhost:7000",
+            "Protocols": "Http1"
+          },
+          "gRPC": {
+            "Url": "http://localhost:7504",
+            "Protocols": "Http2"
           }
-        },
-        "SwaggerUI": {
-          "RoutePrefix": "api/employee/swagger",
-          "ConfigObject": {
-            "Urls": [
-              {
-                "Url": "/api/employee/swagger/v1/swagger.json",
-                "Name": "Employee.API"
-              }
-            ]
-          }
-        },
-        "Swagger": {
-          "RouteTemplate": "api/employee/swagger/{documentname}/swagger.json"
         }
+      }
     }
 
 ---
