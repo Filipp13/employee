@@ -37,11 +37,11 @@ data:
       "Kestrel": {
         "Endpoints": {
           "Http": {
-            "Url": "http://localhost:7000",
+            "Url": "http://0.0.0.0:7000",
             "Protocols": "Http1"
           },
           "gRPC": {
-            "Url": "http://localhost:7504",
+            "Url": "http://0.0.0.0:7504",
             "Protocols": "Http2"
           }
         }
