@@ -1,9 +1,8 @@
 ---
 include: [
-    {project: kube/temp/pmp, file: ez-temp.yaml, ref: main},
-    {project: kube/temp/pmp, file: migrations/liquibase.yaml, ref: main}
+    {project: kube/temp/pmp, file: ez-temp.yaml, ref: main}
     ]
-stages: [prepare, build, migrations, deploy, release, publish]
+stages: [prepare, build, deploy, release, publish]
 
 variables:
     KUBES: |
