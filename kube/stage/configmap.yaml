@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: employee-cm, namespace: _NAMESPACE_}
+data:
+  appsettings.json : |
+    {
+      "Logging": {
+        "MinimumLevel": {
+          "Default": "Debug",
+          "Override": {
+            "Microsoft": "Information",
+            "Microsoft.Hosting.Lifetime": "Information"
+          }
+        }
+      },
+      "ConnectionStrings": {
+        "PracticeManagement": "Data Source=RUMOS0929.RUBY.DRTRUS.RU;Initial Catalog=PracticeManagementStage;MultipleActiveResultSets=true;",
+        "People": "Data Source=RUMOS0255.RUBY.DRTRUS.RU;Initial Catalog=People;MultipleActiveResultSets=true;"
+      },
+      "Endpoints": {
+        "Authentication": {
+          "BaseAddress": "http://auth-svc._NAMESPACE_:7000"
+        },
+        "Arms": {
+          "BaseAddress": "https://cisarms-qa.RUBY.DRTRUS.RU"
+        }
+      },
+      "ARMSActiveListGUID": "E992128B-F7EC-401D-8770-767C61B8ED28",
+      "AD": {
+        "Address": "10.163.10.200",
+        "Port": 389
+      },
+      "CacheSettings": {
+        "SlidingExpiration": 1
+      },
+      "Kestrel": {
+        "Endpoints": {
+          "Http": {
+            "Url": "https://localhost:7000",
+            "Protocols": "Http1"
+          },
+          "gRPC": {
+            "Url": "http://localhost:7504",
+            "Protocols": "Http2"
+          }
+        }
+      }
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: employee-map, namespace: _NAMESPACE_}
+data:
+  UserDB: trinity_stage
+  UserArmsLogin: cistrinityservice_s
+  UserADLogin: cistrinityservice_s
+  UserDBPeople: trinity_user
+  ASPNETCORE_ENVIRONMENT: Stage

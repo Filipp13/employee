@@ -4,3 +4,9 @@ include: [
     {project: kube/temp/pmp, file: migrations/liquibase.yaml, ref: main}
     ]
 stages: [prepare, build, migrations, deploy, release, publish]
+
+variables:
+    KUBES: |
+      _ENV_/configmap
+      _ENV_/secret
+      deployment

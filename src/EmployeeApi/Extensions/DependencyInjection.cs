@@ -28,12 +28,12 @@ namespace Employee.Api
 
         public static IEndpointRouteBuilder UseHealthCheck(this IEndpointRouteBuilder builder)
         {
-            builder.MapHealthChecks("/health", new HealthCheckOptions()
+            builder.MapHealthChecks("/healthcheck", new HealthCheckOptions()
             {
                 Predicate = (check) => check.Tags.Contains("only service")
             });
 
-            builder.MapHealthChecks("/health/db", new HealthCheckOptions()
+            builder.MapHealthChecks("/healthcheck/db", new HealthCheckOptions()
             {
                 Predicate = (check) => check.Tags.Contains(databaseTag)
             });
